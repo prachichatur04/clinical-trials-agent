@@ -26,8 +26,7 @@ def _fake_openai_client(content_or_error):
     return fake, captured_calls
 
 
-async def test_missing_api_key_returns_none(monkeypatch):
-    monkeypatch.delenv("OPENAI_API_KEY", raising=False)
+async def test_missing_api_key_returns_none(no_openai_key):
     result = await generate_summary(
         "query", AnalysisType.DISTRIBUTION, AggregatedResult(buckets=[Bucket(key="Phase 1", count=5)]), 5, 5
     )
@@ -176,9 +175,8 @@ async def test_prompt_omits_quality_section_when_no_assumptions():
     assert "Data quality notes:" not in user_message
 
 
-def test_summary_client_missing_api_key_and_no_client_raises(monkeypatch):
+def test_summary_client_missing_api_key_and_no_client_raises(no_openai_key):
     from app.intent.llm_client import LLMUnavailableError
 
-    monkeypatch.delenv("OPENAI_API_KEY", raising=False)
     with pytest.raises(LLMUnavailableError):
         SummaryLLMClient()

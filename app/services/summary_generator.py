@@ -1,8 +1,8 @@
 import logging
-import os
 
 from openai import AsyncOpenAI
 
+from app.config import get_settings
 from app.intent.llm_client import LLMUnavailableError
 from app.schemas.intent import AnalysisType
 from app.schemas.internal import AggregatedResult
@@ -34,7 +34,7 @@ class SummaryLLMClient:
         model: str = DEFAULT_MODEL,
         client: AsyncOpenAI | None = None,
     ):
-        resolved_key = api_key if api_key is not None else os.environ.get("OPENAI_API_KEY")
+        resolved_key = api_key if api_key is not None else get_settings().openai_api_key
         if not resolved_key and client is None:
             raise LLMUnavailableError("OPENAI_API_KEY is not set")
         self._model = model

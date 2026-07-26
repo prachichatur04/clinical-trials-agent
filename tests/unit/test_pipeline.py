@@ -252,9 +252,7 @@ async def test_comparison_unique_study_count_dedupes_overlap_across_sides():
 # --- heuristic fallback path (no LLM) ---------------------------------------
 
 
-async def test_no_llm_falls_back_to_heuristic_and_still_returns_valid_response(monkeypatch):
-    monkeypatch.delenv("OPENAI_API_KEY", raising=False)
-
+async def test_no_llm_falls_back_to_heuristic_and_still_returns_valid_response(no_openai_key):
     def handler(request: httpx.Request) -> httpx.Response:
         return _page_response([_study("NCT1")], total_count=1)
 
@@ -318,7 +316,7 @@ async def test_summary_generation_failure_does_not_fail_the_request():
 # --- request field overrides (ground truth beats Touch 1's guess) ----------
 
 
-async def test_request_compare_a_and_b_force_comparison_without_an_llm():
+async def test_request_compare_a_and_b_force_comparison_without_an_llm(no_openai_key):
     # The heuristic path alone can never produce analysis_type=comparison
     # (no NER), so this is the only way to reach it without an LLM key --
     # explicit structured fields are stronger evidence than keyword regex.

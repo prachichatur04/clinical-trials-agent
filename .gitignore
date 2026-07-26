@@ -12,5 +12,6 @@ htmlcov/
 dist/
 build/
 .DS_Store
+.claude/
 examples/outputs/*.json
 !examples/outputs/.gitkeep

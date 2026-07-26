@@ -1,10 +1,14 @@
 import json
+import logging
+import time
 
 from openai import AsyncOpenAI
 
 from app.config import get_settings
 from app.intent.prompt import SYSTEM_PROMPT, build_intent_json_schema
 from app.schemas.intent import Intent
+
+logger = logging.getLogger(__name__)
 
 DEFAULT_MODEL = "gpt-4o-mini"
 
@@ -38,6 +42,10 @@ class IntentLLMClient:
         parse -- callers are expected to catch that and retry/fall back.
         """
         user_content = query if not extra_context else f"{query}\n\n{extra_context}"
+        logger.info("Touch 1 request: query=%r retry=%s", query, extra_context is not None)
+        logger.debug("Touch 1 full prompt -- system: %s | user: %s", SYSTEM_PROMPT, user_content)
+
+        started_at = time.monotonic()
         response = await self._client.chat.completions.create(
             model=self._model,
             messages=[
@@ -46,6 +54,18 @@ class IntentLLMClient:
             ],
             response_format={"type": "json_schema", "json_schema": build_intent_json_schema()},
         )
+        duration_ms = (time.monotonic() - started_at) * 1000
+
         raw = response.choices[0].message.content
+        logger.debug("Touch 1 raw response: %s", raw)
         data = json.loads(raw)
-        return Intent(**data)
+        intent = Intent(**data)
+
+        logger.info(
+            "Touch 1 response (%.0fms): analysis_type=%s confidence=%s entities=%s",
+            duration_ms,
+            intent.analysis_type.value,
+            intent.confidence.value,
+            intent.entities.model_dump(exclude_none=True),
+        )
+        return intent

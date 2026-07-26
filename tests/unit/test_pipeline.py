@@ -2,7 +2,7 @@ import httpx
 import pytest
 
 from app.ctgov.client import CTGovClient
-from app.exceptions import NoResultsError
+from app.exceptions import NoResultsError, UnsupportedQueryError
 from app.pipeline import run_pipeline
 from app.schemas.intent import AnalysisType, Confidence, Entities, Intent, VizType
 from app.schemas.request import QueryRequest
@@ -54,9 +54,12 @@ def _stub_summary(text: str | None = "Summary text.", raises: Exception | None =
 
 
 def _intent(analysis_type=AnalysisType.DISTRIBUTION, entities=None, **overrides) -> Intent:
+    # Default entities carry a scoping field (condition) so run_pipeline's
+    # _has_any_scoping_entity check passes -- tests that care about specific
+    # entities pass their own `entities=` and override this.
     defaults = {
         "analysis_type": analysis_type,
-        "entities": entities or Entities(),
+        "entities": entities or Entities(condition="lung cancer"),
         "suggested_viz": VizType.BAR_CHART,
         "query_plan": "plan",
         "notes": "interpretation",
@@ -257,7 +260,7 @@ async def test_no_llm_falls_back_to_heuristic_and_still_returns_valid_response(n
         return _page_response([_study("NCT1")], total_count=1)
 
     client = _mock_client(handler)
-    request = QueryRequest(query="How are trials distributed across phases?")
+    request = QueryRequest(query="How are trials distributed across phases?", condition="lung cancer")
 
     response = await run_pipeline(request, ctgov_client=client, llm_client=None)
 
@@ -375,3 +378,63 @@ async def test_request_fields_left_unset_do_not_clobber_llm_extracted_entities()
     response = await run_pipeline(request, ctgov_client=client, llm_client=llm)
 
     assert response.meta.filters_applied["drug_name"] == "from-llm"
+
+
+# --- unsupported (unscoped) queries -----------------------------------------
+
+
+async def test_query_with_no_recognizable_entity_raises_unsupported_query():
+    # Reported behavior: a query like a person's name extracts no drug/
+    # condition/sponsor/etc, so the fetch was completely unscoped and
+    # silently returned stats for the entire ClinicalTrials.gov database
+    # (596k+ studies) instead of failing. Real name from the bug report:
+    # a random person's name gave back "total trials: 595,630".
+    llm = _stub_llm(_intent(AnalysisType.COUNT, entities=Entities()))
+    request = QueryRequest(query="sarveshsawant is my friend I think")
+
+    with pytest.raises(UnsupportedQueryError):
+        await run_pipeline(request, llm_client=llm)
+
+
+async def test_dimension_alone_does_not_count_as_a_scoping_entity():
+    # dimension only controls how already-fetched records get bucketed --
+    # it never becomes a query.*/filter.* param, so it doesn't scope the
+    # fetch at all. A dimension with nothing else set is exactly as
+    # unscoped as no entities at all.
+    llm = _stub_llm(_intent(AnalysisType.DISTRIBUTION, entities=Entities(dimension="phase")))
+    request = QueryRequest(query="How are trials distributed across phases?")
+
+    with pytest.raises(UnsupportedQueryError):
+        await run_pipeline(request, llm_client=llm)
+
+
+async def test_compare_a_and_b_alone_count_as_scoping_even_with_no_other_entity():
+    def handler(request: httpx.Request) -> httpx.Response:
+        return _page_response([_study("NCT1")], total_count=1)
+
+    client = _mock_client(handler)
+    llm = _stub_llm(
+        _intent(AnalysisType.COMPARISON, entities=Entities(compare_a="Keytruda", compare_b="Opdivo"))
+    )
+    request = QueryRequest(query="Compare Keytruda vs Opdivo.")
+
+    response = await run_pipeline(request, ctgov_client=client, llm_client=llm)
+
+    assert response.visualization.type == VizType.GROUPED_BAR_CHART
+
+
+async def test_caller_supplied_structured_field_alone_is_enough_even_with_empty_intent():
+    # A caller who supplies e.g. drug_name directly shouldn't be rejected
+    # just because Touch 1 itself extracted nothing from the query text --
+    # the ground-truth override (_apply_request_overrides) runs before this
+    # check, so the request's own fields count too.
+    def handler(request: httpx.Request) -> httpx.Response:
+        return _page_response([_study("NCT1")], total_count=1)
+
+    client = _mock_client(handler)
+    llm = _stub_llm(_intent(AnalysisType.DISTRIBUTION, entities=Entities()))
+    request = QueryRequest(query="How are trials distributed?", drug_name="Pembrolizumab")
+
+    response = await run_pipeline(request, ctgov_client=client, llm_client=llm)
+
+    assert response.meta.filters_applied["drug_name"] == "Pembrolizumab"

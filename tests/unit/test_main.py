@@ -53,9 +53,11 @@ def _stub_summary(text: str = "Summary text."):
 
 
 def _intent(analysis_type=AnalysisType.DISTRIBUTION, entities=None) -> Intent:
+    # Default entities carry a scoping field (condition) so run_pipeline's
+    # _has_any_scoping_entity check passes.
     return Intent(
         analysis_type=analysis_type,
-        entities=entities or Entities(),
+        entities=entities or Entities(condition="lung cancer"),
         suggested_viz=VizType.BAR_CHART,
         query_plan="plan",
         notes="interpretation",
@@ -153,6 +155,20 @@ def test_max_studies_out_of_bounds_returns_structured_422():
     response = client.post("/query", json={"query": "How are trials distributed?", "max_studies": 999999})
     assert response.status_code == 422
     assert response.json()["error_type"] == "validation_error"
+
+
+def test_query_with_no_recognizable_entity_returns_structured_422():
+    # A query that identifies no drug/condition/sponsor/etc at all (e.g. a
+    # person's name) must not silently fall through to an unscoped fetch
+    # of the entire ClinicalTrials.gov database.
+    app.dependency_overrides[get_llm_client] = lambda: _stub_llm(_intent(AnalysisType.COUNT, entities=Entities()))
+
+    response = client.post("/query", json={"query": "sarveshsawant is my friend"})
+
+    assert response.status_code == 422
+    body = response.json()
+    assert body["error_type"] == "unsupported_query"
+    assert body["suggestion"]
 
 
 def test_default_ctgov_and_llm_clients_used_when_not_overridden():

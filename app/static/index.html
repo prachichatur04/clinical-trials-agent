@@ -1,0 +1,608 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Clinical Trials Intelligence</title>
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
+<style>
+  :root {
+    color-scheme: light;
+    --surface-1: #fcfcfb;
+    --page-plane: #f9f9f7;
+    --text-primary: #0b0b0b;
+    --text-secondary: #52514e;
+    --text-muted: #898781;
+    --gridline: #e1e0d9;
+    --baseline: #c3c2b7;
+    --border: rgba(11, 11, 11, 0.10);
+    --card-bg: #ffffff;
+    --accent: #2a78d6;
+    --accent-ink: #ffffff;
+
+    --series-1: #2a78d6; /* blue */
+    --series-2: #eb6834; /* orange */
+    --series-3: #1baf7a; /* aqua */
+    --series-4: #eda100; /* yellow */
+    --series-5: #e87ba4; /* magenta */
+    --series-6: #008300; /* green */
+    --series-7: #4a3aa7; /* violet */
+    --series-8: #e34948; /* red */
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      color-scheme: dark;
+      --surface-1: #1a1a19;
+      --page-plane: #0d0d0d;
+      --text-primary: #ffffff;
+      --text-secondary: #c3c2b7;
+      --text-muted: #898781;
+      --gridline: #2c2c2a;
+      --baseline: #383835;
+      --border: rgba(255, 255, 255, 0.10);
+      --card-bg: #232322;
+      --accent: #3987e5;
+
+      --series-1: #3987e5;
+      --series-2: #d95926;
+      --series-3: #199e70;
+      --series-4: #c98500;
+      --series-5: #d55181;
+      --series-6: #008300;
+      --series-7: #9085e9;
+      --series-8: #e66767;
+    }
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    background: var(--page-plane);
+    color: var(--text-primary);
+  }
+  header {
+    background: linear-gradient(135deg, #1a365d, #2b6cb0);
+    color: #ffffff;
+    padding: 28px 24px;
+  }
+  header h1 { margin: 0 0 4px; font-size: 1.5rem; }
+  header p { margin: 0; opacity: 0.85; font-size: 0.9rem; }
+
+  main {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px;
+  }
+
+  .search-row {
+    display: flex;
+    gap: 10px;
+  }
+  #query-input {
+    flex: 1;
+    padding: 12px 14px;
+    font-size: 1rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface-1);
+    color: var(--text-primary);
+  }
+  #analyze-btn {
+    padding: 12px 22px;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    background: var(--accent);
+    color: var(--accent-ink);
+    cursor: pointer;
+  }
+  #analyze-btn:disabled { opacity: 0.6; cursor: default; }
+
+  .options-row {
+    display: flex;
+    gap: 18px;
+    margin-top: 10px;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+  }
+  .options-row label { display: flex; align-items: center; gap: 6px; cursor: pointer; }
+
+  .examples {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+  }
+  .example-chip {
+    font-size: 0.82rem;
+    padding: 6px 12px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--surface-1);
+    color: var(--text-secondary);
+    cursor: pointer;
+  }
+  .example-chip:hover { border-color: var(--accent); color: var(--accent); }
+
+  #status-line {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    min-height: 1.2em;
+  }
+  #status-line.error { color: var(--series-8); font-weight: 600; }
+
+  #chart { min-height: 460px; }
+
+  .hero-stat {
+    text-align: center;
+    padding: 32px 0;
+  }
+  .hero-stat .value { font-size: 3.2rem; font-weight: 700; color: var(--accent); }
+  .hero-stat .label { font-size: 1rem; color: var(--text-secondary); margin-top: 6px; }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  @media (max-width: 720px) {
+    .two-col { grid-template-columns: 1fr; }
+  }
+
+  .card h3 {
+    margin: 0 0 8px;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text-muted);
+  }
+  .card p { margin: 0; font-size: 0.92rem; color: var(--text-primary); line-height: 1.5; }
+  .muted-note { color: var(--text-muted); font-style: italic; }
+
+  .meta-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: 0.82rem;
+  }
+  .pill {
+    padding: 5px 11px;
+    border-radius: 999px;
+    background: var(--surface-1);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+  }
+  .pill strong { color: var(--text-primary); }
+
+  ul.assumptions { margin: 8px 0 0; padding-left: 18px; font-size: 0.85rem; color: var(--text-secondary); }
+
+  details summary {
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+  }
+  .citation-item {
+    padding: 10px 0;
+    border-top: 1px solid var(--gridline);
+    font-size: 0.85rem;
+  }
+  .citation-item a { color: var(--accent); text-decoration: none; font-weight: 600; }
+  .citation-item a:hover { text-decoration: underline; }
+  .citation-excerpt {
+    margin-top: 4px;
+    color: var(--text-secondary);
+    font-family: ui-monospace, monospace;
+    font-size: 0.8rem;
+  }
+  .citation-field { color: var(--text-muted); font-size: 0.75rem; }
+
+  #spinner {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 2px solid var(--border);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    vertical-align: middle;
+    margin-right: 6px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Clinical Trials Intelligence</h1>
+  <p>Ask a question about clinical trials. Answers come back as a visualization, backed by ClinicalTrials.gov.</p>
+</header>
+
+<main>
+  <section class="card">
+    <div class="search-row">
+      <input id="query-input" type="text" placeholder="Ask a question about clinical trials..." />
+      <button id="analyze-btn">Analyze</button>
+    </div>
+    <div class="options-row">
+      <label><input type="checkbox" id="opt-citations" checked /> Include citations</label>
+      <label><input type="checkbox" id="opt-summary" /> Include summary</label>
+    </div>
+    <div class="examples" id="examples"></div>
+  </section>
+
+  <div id="status-line"></div>
+
+  <section class="card hidden" id="result-section">
+    <div id="chart"></div>
+  </section>
+
+  <div class="two-col hidden" id="text-panels">
+    <section class="card">
+      <h3>Summary</h3>
+      <p id="summary-text" class="muted-note">No summary requested.</p>
+    </section>
+    <section class="card">
+      <h3>Query Plan</h3>
+      <p id="plan-text"></p>
+    </section>
+  </div>
+
+  <section class="card hidden" id="meta-section">
+    <h3>Meta</h3>
+    <div class="meta-pills" id="meta-pills"></div>
+    <ul class="assumptions" id="assumptions-list"></ul>
+  </section>
+
+  <section class="card hidden" id="citations-section">
+    <details>
+      <summary id="citations-summary">Citations</summary>
+      <div id="citations-list"></div>
+    </details>
+  </section>
+</main>
+
+<script>
+const EXAMPLES = [
+  { label: "Pembrolizumab trends since 2015", query: "How has the number of trials for pembrolizumab changed per year since 2015?", drug_name: "pembrolizumab", start_year: 2015 },
+  { label: "Lung cancer by phase", query: "How are lung cancer trials distributed across phases?", condition: "lung cancer" },
+  { label: "Keytruda vs Opdivo", query: "Compare phases for trials involving Keytruda vs Opdivo.", compare_a: "Keytruda", compare_b: "Opdivo" },
+  { label: "Diabetes by country", query: "Which countries have the most recruiting trials for diabetes?", condition: "diabetes" },
+  { label: "Breast cancer network", query: "Show a network of sponsors and drugs for breast cancer trials.", condition: "breast cancer" },
+];
+
+const CATEGORICAL = [
+  "var(--series-1)", "var(--series-2)", "var(--series-3)", "var(--series-4)",
+  "var(--series-5)", "var(--series-6)", "var(--series-7)", "var(--series-8)",
+];
+
+function resolveColor(cssVar) {
+  return getComputedStyle(document.body).getPropertyValue(cssVar.match(/--[\w-]+/)[0]).trim();
+}
+
+function isDark() {
+  return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+}
+
+function plotlyTheme() {
+  return {
+    paper_bgcolor: resolveColor("var(--card-bg)"),
+    plot_bgcolor: resolveColor("var(--card-bg)"),
+    font: { color: resolveColor("var(--text-primary)"), family: "system-ui, sans-serif" },
+    gridColor: resolveColor("var(--gridline)"),
+    lineColor: resolveColor("var(--baseline)"),
+  };
+}
+
+const examplesEl = document.getElementById("examples");
+EXAMPLES.forEach((ex) => {
+  const chip = document.createElement("button");
+  chip.className = "example-chip";
+  chip.textContent = ex.label;
+  chip.addEventListener("click", () => {
+    document.getElementById("query-input").value = ex.query;
+    runQuery(ex);
+  });
+  examplesEl.appendChild(chip);
+});
+
+document.getElementById("analyze-btn").addEventListener("click", () => runQuery());
+document.getElementById("query-input").addEventListener("keydown", (e) => {
+  if (e.key === "Enter") runQuery();
+});
+
+async function runQuery(extra) {
+  const query = document.getElementById("query-input").value.trim();
+  if (!query) {
+    setStatus("Enter a question first.", true);
+    return;
+  }
+
+  const button = document.getElementById("analyze-btn");
+  button.disabled = true;
+  setStatus('<span id="spinner"></span>Analyzing...', false, true);
+  hideResults();
+
+  const body = Object.assign(
+    {
+      query,
+      include_citations: document.getElementById("opt-citations").checked,
+      include_summary: document.getElementById("opt-summary").checked,
+    },
+    extra ? { ...extra, query } : {}
+  );
+
+  try {
+    const response = await fetch("/query", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+    const data = await response.json();
+
+    if (!response.ok || data.error_type) {
+      const message = data.message || "Something went wrong.";
+      const suggestion = data.suggestion ? ` ${data.suggestion}` : "";
+      setStatus(escapeHtml(message + suggestion), true);
+      return;
+    }
+
+    setStatus("");
+    renderResult(data);
+  } catch (err) {
+    setStatus("Could not reach the server: " + escapeHtml(String(err.message || err)), true);
+  } finally {
+    button.disabled = false;
+  }
+}
+
+function setStatus(html, isError, allowHtml) {
+  const el = document.getElementById("status-line");
+  el.className = isError ? "error" : "";
+  el.innerHTML = allowHtml || isError ? html : escapeHtml(html);
+}
+
+function hideResults() {
+  document.getElementById("result-section").classList.add("hidden");
+  document.getElementById("text-panels").classList.add("hidden");
+  document.getElementById("meta-section").classList.add("hidden");
+  document.getElementById("citations-section").classList.add("hidden");
+}
+
+function escapeHtml(str) {
+  const div = document.createElement("div");
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+function renderResult(data) {
+  document.getElementById("result-section").classList.remove("hidden");
+  document.getElementById("text-panels").classList.remove("hidden");
+  document.getElementById("meta-section").classList.remove("hidden");
+
+  renderChart(data.visualization);
+  renderText(data);
+  renderMeta(data.meta);
+  renderCitations(data.visualization);
+}
+
+function renderChart(viz) {
+  const el = document.getElementById("chart");
+  const theme = plotlyTheme();
+  const layoutBase = {
+    title: { text: viz.title, font: { size: 16 } },
+    paper_bgcolor: theme.paper_bgcolor,
+    plot_bgcolor: theme.plot_bgcolor,
+    font: theme.font,
+    margin: { t: 50, r: 20, b: 60, l: 60 },
+  };
+
+  if (viz.type === "network_graph") {
+    renderNetwork(el, viz, layoutBase);
+    return;
+  }
+  if (viz.type === "stat_card") {
+    renderStatCard(el, viz);
+    return;
+  }
+
+  const seriesLabels = [...new Set(viz.data.map((d) => d.series).filter(Boolean))];
+  const isTemporal = viz.encoding && viz.encoding.x && viz.encoding.x.type === "temporal";
+  const mode = viz.type === "time_series" ? "lines+markers" : undefined;
+  const traceType = viz.type === "time_series" ? "scatter" : "bar";
+
+  let traces;
+  if (seriesLabels.length > 0) {
+    traces = seriesLabels.map((label, i) => {
+      const points = viz.data.filter((d) => d.series === label);
+      return {
+        type: traceType,
+        mode,
+        name: label,
+        x: points.map((d) => d.x),
+        y: points.map((d) => d.y),
+        marker: { color: CATEGORICAL[i % CATEGORICAL.length].startsWith("var") ? resolveColor(CATEGORICAL[i % CATEGORICAL.length]) : CATEGORICAL[i % CATEGORICAL.length] },
+      };
+    });
+  } else {
+    traces = [
+      {
+        type: traceType,
+        mode,
+        x: viz.data.map((d) => d.x),
+        y: viz.data.map((d) => d.y),
+        marker: { color: resolveColor(CATEGORICAL[0]) },
+        showlegend: false,
+      },
+    ];
+  }
+
+  const layout = Object.assign({}, layoutBase, {
+    barmode: seriesLabels.length > 0 ? "group" : undefined,
+    xaxis: { title: viz.encoding?.x?.field || "", gridcolor: theme.gridColor, linecolor: theme.lineColor, type: isTemporal ? "category" : undefined },
+    yaxis: { title: viz.encoding?.y?.field || "count", gridcolor: theme.gridColor, linecolor: theme.lineColor },
+    showlegend: seriesLabels.length > 1,
+  });
+
+  Plotly.newPlot(el, traces, layout, { responsive: true, displayModeBar: false });
+}
+
+function renderStatCard(el, viz) {
+  const value = viz.data && viz.data[0] ? viz.data[0].y : 0;
+  el.innerHTML = `<div class="hero-stat"><div class="value">${Number(value).toLocaleString()}</div><div class="label">${escapeHtml(viz.title)}</div></div>`;
+}
+
+function renderNetwork(el, viz, layoutBase) {
+  const nodes = (viz.network_data && viz.network_data.nodes) || [];
+  const edges = (viz.network_data && viz.network_data.edges) || [];
+
+  if (nodes.length === 0) {
+    el.innerHTML = '<p class="muted-note" style="padding:24px;">No network could be built from the returned studies.</p>';
+    return;
+  }
+
+  const angleStep = (2 * Math.PI) / nodes.length;
+  const positions = {};
+  nodes.forEach((n, i) => {
+    positions[n.id] = { x: Math.cos(i * angleStep), y: Math.sin(i * angleStep) };
+  });
+
+  const maxWeight = Math.max(...edges.map((e) => e.weight), 1);
+  const edgeTraces = edges.map((e) => {
+    const a = positions[e.source];
+    const b = positions[e.target];
+    if (!a || !b) return null;
+    return {
+      type: "scatter",
+      mode: "lines",
+      x: [a.x, b.x],
+      y: [a.y, b.y],
+      line: { width: 1 + (e.weight / maxWeight) * 5, color: resolveColor("var(--baseline)") },
+      hoverinfo: "text",
+      text: `${e.source} → ${e.target}: ${e.weight}`,
+      showlegend: false,
+    };
+  }).filter(Boolean);
+
+  const groups = [...new Set(nodes.map((n) => n.type))];
+  // Labeling every node on a 40-node ring is unreadable -- only the
+  // heaviest nodes per group get a direct label; the rest are still
+  // hoverable (hoverinfo below covers every node regardless).
+  const labeledIds = new Set(
+    [...nodes].sort((a, b) => b.weight - a.weight).slice(0, Math.min(20, nodes.length)).map((n) => n.id)
+  );
+
+  const nodeTraces = groups.map((group, i) => {
+    const groupNodes = nodes.filter((n) => n.type === group);
+    return {
+      type: "scatter",
+      mode: "markers+text",
+      name: group,
+      x: groupNodes.map((n) => positions[n.id].x),
+      y: groupNodes.map((n) => positions[n.id].y),
+      text: groupNodes.map((n) => (labeledIds.has(n.id) ? n.label : "")),
+      textposition: "top center",
+      textfont: { size: 11 },
+      marker: {
+        size: groupNodes.map((n) => 12 + n.weight * 2),
+        color: resolveColor(CATEGORICAL[i % CATEGORICAL.length]),
+        line: { width: 1, color: resolveColor("var(--card-bg)") },
+      },
+      hoverinfo: "text",
+      hovertext: groupNodes.map((n) => `${n.label} (${n.type})<br>weight: ${n.weight}<br>studies: ${n.nct_ids.length}`),
+    };
+  });
+
+  const layout = Object.assign({}, layoutBase, {
+    height: 520,
+    xaxis: { visible: false, range: [-1.6, 1.6] },
+    yaxis: { visible: false, range: [-1.6, 1.6] },
+    showlegend: groups.length > 1,
+  });
+
+  Plotly.newPlot(el, [...edgeTraces, ...nodeTraces], layout, { responsive: true, displayModeBar: false });
+}
+
+function renderText(data) {
+  const summaryEl = document.getElementById("summary-text");
+  if (data.summary) {
+    summaryEl.textContent = data.summary;
+    summaryEl.classList.remove("muted-note");
+  } else {
+    summaryEl.textContent = "No summary requested.";
+    summaryEl.classList.add("muted-note");
+  }
+  document.getElementById("plan-text").textContent = data.meta.query_plan;
+}
+
+function renderMeta(meta) {
+  const pills = document.getElementById("meta-pills");
+  pills.innerHTML = "";
+  const entries = [
+    ["Analysis", meta.analysis_type],
+    ["Matched", meta.total_studies_matched.toLocaleString()],
+    ["Fetched", meta.total_studies_fetched.toLocaleString()],
+    ["Unique", meta.unique_study_count.toLocaleString()],
+    ["Intent source", meta.intent_source],
+  ];
+  entries.forEach(([label, value]) => {
+    const pill = document.createElement("span");
+    pill.className = "pill";
+    pill.innerHTML = `${escapeHtml(label)}: <strong>${escapeHtml(String(value))}</strong>`;
+    pills.appendChild(pill);
+  });
+
+  const assumptionsEl = document.getElementById("assumptions-list");
+  assumptionsEl.innerHTML = "";
+  (meta.assumptions || []).forEach((a) => {
+    const li = document.createElement("li");
+    li.textContent = a;
+    assumptionsEl.appendChild(li);
+  });
+}
+
+function renderCitations(viz) {
+  const allCitations = [];
+  (viz.data || []).forEach((d) => (d.citations || []).forEach((c) => allCitations.push(c)));
+  if (viz.network_data && viz.network_data.edges) {
+    viz.network_data.edges.forEach((e) => (e.citations || []).forEach((c) => allCitations.push(c)));
+  }
+
+  const section = document.getElementById("citations-section");
+  if (allCitations.length === 0) {
+    section.classList.add("hidden");
+    return;
+  }
+  section.classList.remove("hidden");
+  document.getElementById("citations-summary").textContent = `Citations (${allCitations.length})`;
+
+  const list = document.getElementById("citations-list");
+  list.innerHTML = "";
+  allCitations.forEach((c) => {
+    const item = document.createElement("div");
+    item.className = "citation-item";
+    item.innerHTML = `
+      <a href="${c.url}" target="_blank" rel="noopener">${escapeHtml(c.nct_id)}</a>
+      <div class="citation-field">${escapeHtml(c.field_path)}</div>
+      <div class="citation-excerpt">${escapeHtml(c.excerpt)}</div>
+    `;
+    list.appendChild(item);
+  });
+}
+</script>
+</body>
+</html>

@@ -1,10 +1,12 @@
 import logging
 import time
+from pathlib import Path
 
 from fastapi import Depends, FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+from fastapi.staticfiles import StaticFiles
 
 from app.config import get_settings
 from app.ctgov.client import CTGovClient
@@ -39,8 +41,15 @@ async def log_requests(request: Request, call_next):
 
 @app.exception_handler(RequestValidationError)
 async def handle_request_validation_error(request: Request, exc: RequestValidationError) -> JSONResponse:
-    error = ValidationError(message=str(exc.errors()))
+    error = ValidationError(message="; ".join(_format_validation_error(e) for e in exc.errors()))
     return JSONResponse(status_code=error.status_code, content=error.to_response().model_dump(mode="json"))
+
+
+def _format_validation_error(error: dict) -> str:
+    # error["loc"] is e.g. ("body", "query") -- the field name a caller
+    # actually recognizes, not the raw pydantic tuple/message dump.
+    field = error["loc"][-1] if error["loc"] else "request"
+    return f"{field}: {error['msg']}"
 
 
 @app.exception_handler(AppError)
@@ -92,5 +101,7 @@ async def query(
     )
 
 
-# A demo UI (app/static/index.html) is served from "/" starting in Phase 7 --
-# no static mount here yet since that file doesn't exist until then.
+# Registered after /health, /query, /docs, /openapi.json so the demo UI at
+# "/" never shadows the API routes above it.
+_STATIC_DIR = Path(__file__).parent / "static"
+app.mount("/", StaticFiles(directory=_STATIC_DIR, html=True), name="static")

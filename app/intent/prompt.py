@@ -14,6 +14,9 @@ Rules:
 - Extract only what is explicit or clearly implied. Never invent entities.
 - Structured fields provided by the caller are ground truth -- do not re-derive them.
 - comparison requires both compare_a and compare_b; if only one, downgrade to distribution.
+- For network queries, set dimension to "drug_cooccurrence" when the question is about which \
+drugs co-occur/combine together (drug<->drug); leave dimension unset for a general sponsor<->drug \
+network.
 - If the query is ambiguous, pick the most reasonable type and set confidence: low."""
 
 _ENTITY_STRING_FIELDS = [

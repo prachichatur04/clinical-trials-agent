@@ -107,6 +107,20 @@ def test_entities_pulled_from_structured_request_fields():
     assert intent.entities.end_year == 2020
 
 
+def test_combination_phrasing_sets_drug_cooccurrence_dimension():
+    intent = classify_heuristically(
+        QueryRequest(query="Which drugs frequently co-occur in combination studies?")
+    )
+    assert intent.analysis_type == AnalysisType.NETWORK
+    assert intent.entities.dimension == "drug_cooccurrence"
+
+
+def test_generic_network_phrasing_leaves_dimension_unset():
+    intent = classify_heuristically(QueryRequest(query="Show a network of sponsors and drugs."))
+    assert intent.analysis_type == AnalysisType.NETWORK
+    assert intent.entities.dimension is None
+
+
 def test_heuristic_never_fabricates_compare_entities():
     # No NER without an LLM -- compare_a/compare_b stay unset even for a
     # clearly comparative query, and the schema's own downgrade rule handles

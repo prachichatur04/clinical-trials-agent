@@ -22,6 +22,8 @@ _PATTERNS: list[tuple[re.Pattern, AnalysisType]] = [
     (re.compile(r"\bhow many\b|\bcount\b|\btotal\b", re.IGNORECASE), AnalysisType.COUNT),
 ]
 
+_DRUG_COOCCURRENCE_PATTERN = re.compile(r"\bco-occur|\bcombination\b", re.IGNORECASE)
+
 _SUGGESTED_VIZ: dict[AnalysisType, VizType] = {
     AnalysisType.TREND: VizType.TIME_SERIES,
     AnalysisType.DISTRIBUTION: VizType.BAR_CHART,
@@ -43,9 +45,15 @@ def classify_heuristically(request: QueryRequest) -> Intent:
     downgrades it to distribution -- working as intended, not a bug.
     """
     analysis_type = _match_analysis_type(request.query)
+    entities = _entities_from_request(request)
+    if analysis_type == AnalysisType.NETWORK and _DRUG_COOCCURRENCE_PATTERN.search(request.query):
+        # "co-occur"/"combination" phrasing means drug<->drug, not the
+        # sponsor<->drug bipartite that bare "network" defaults to.
+        entities.dimension = "drug_cooccurrence"
+
     return Intent(
         analysis_type=analysis_type,
-        entities=_entities_from_request(request),
+        entities=entities,
         suggested_viz=_SUGGESTED_VIZ[analysis_type],
         query_plan=(
             f"Heuristic fallback: keyword-matched query text to analysis_type="

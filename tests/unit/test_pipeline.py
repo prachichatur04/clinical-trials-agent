@@ -39,6 +39,20 @@ def _stub_llm(intent: Intent):
     return _Stub()
 
 
+def _stub_summary(text: str | None = "Summary text.", raises: Exception | None = None):
+    class _Stub:
+        def __init__(self):
+            self.calls = 0
+
+        async def summarize(self, prompt):
+            self.calls += 1
+            if raises is not None:
+                raise raises
+            return text
+
+    return _Stub()
+
+
 def _intent(analysis_type=AnalysisType.DISTRIBUTION, entities=None, **overrides) -> Intent:
     defaults = {
         "analysis_type": analysis_type,
@@ -250,4 +264,52 @@ async def test_no_llm_falls_back_to_heuristic_and_still_returns_valid_response(m
     response = await run_pipeline(request, ctgov_client=client, llm_client=None)
 
     assert response.meta.intent_source == IntentSource.HEURISTIC_FALLBACK
+    assert response.visualization.type == VizType.BAR_CHART
+
+
+# --- Touch 2: include_summary wiring ----------------------------------------
+
+
+async def test_include_summary_true_calls_generator_and_sets_summary():
+    def handler(request: httpx.Request) -> httpx.Response:
+        return _page_response([_study("NCT1")], total_count=1)
+
+    client = _mock_client(handler)
+    summary_stub = _stub_summary("Phase 1 dominates.")
+    request = QueryRequest(query="How are trials distributed across phases?", include_summary=True)
+    llm = _stub_llm(_intent(AnalysisType.DISTRIBUTION))
+
+    response = await run_pipeline(request, ctgov_client=client, llm_client=llm, summary_llm_client=summary_stub)
+
+    assert response.summary == "Phase 1 dominates."
+    assert summary_stub.calls == 1
+
+
+async def test_include_summary_false_never_calls_generator():
+    def handler(request: httpx.Request) -> httpx.Response:
+        return _page_response([_study("NCT1")], total_count=1)
+
+    client = _mock_client(handler)
+    summary_stub = _stub_summary("should never be used")
+    request = QueryRequest(query="How are trials distributed across phases?", include_summary=False)
+    llm = _stub_llm(_intent(AnalysisType.DISTRIBUTION))
+
+    response = await run_pipeline(request, ctgov_client=client, llm_client=llm, summary_llm_client=summary_stub)
+
+    assert response.summary is None
+    assert summary_stub.calls == 0
+
+
+async def test_summary_generation_failure_does_not_fail_the_request():
+    def handler(request: httpx.Request) -> httpx.Response:
+        return _page_response([_study("NCT1")], total_count=1)
+
+    client = _mock_client(handler)
+    summary_stub = _stub_summary(raises=RuntimeError("LLM unavailable"))
+    request = QueryRequest(query="How are trials distributed across phases?", include_summary=True)
+    llm = _stub_llm(_intent(AnalysisType.DISTRIBUTION))
+
+    response = await run_pipeline(request, ctgov_client=client, llm_client=llm, summary_llm_client=summary_stub)
+
+    assert response.summary is None
     assert response.visualization.type == VizType.BAR_CHART

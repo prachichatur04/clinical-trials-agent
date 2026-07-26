@@ -10,6 +10,7 @@ from app.schemas.intent import AnalysisType, Entities, Intent
 from app.schemas.internal import DispatchResult, TrialRecord
 from app.schemas.request import QueryRequest
 from app.schemas.response import Meta, QueryResponse
+from app.services.summary_generator import SummaryLLMClient, generate_summary
 from app.viz.builder import build_visualization
 
 CTGOV_STUDIES_URL = "https://clinicaltrials.gov/api/v2/studies"
@@ -21,10 +22,10 @@ async def run_pipeline(
     *,
     ctgov_client: CTGovClient | None = None,
     llm_client: IntentLLMClient | None = None,
+    summary_llm_client: SummaryLLMClient | None = None,
 ) -> QueryResponse:
     """The thin orchestrator: Touch 1 -> fetch -> extract -> aggregate ->
-    build viz -> assemble response. Touch 2 (summary) isn't wired in yet --
-    that's Phase 6; `summary` stays None until then.
+    build viz -> Touch 2 (if requested) -> assemble response.
     """
     generated_at = datetime.now(UTC)
     parsed = await parse_intent(request, llm_client=llm_client)
@@ -58,6 +59,17 @@ async def run_pipeline(
         include_citations=request.include_citations,
     )
 
+    summary = None
+    if request.include_summary:
+        summary = await generate_summary(
+            request.query,
+            intent.analysis_type,
+            dispatch_result.aggregated,
+            total_matched,
+            total_fetched,
+            llm_client=summary_llm_client,
+        )
+
     meta = Meta(
         query_interpretation=intent.notes,
         query_plan=intent.query_plan,
@@ -71,7 +83,7 @@ async def run_pipeline(
         generated_at=generated_at,
         intent_source=parsed.source,
     )
-    return QueryResponse(visualization=visualization, summary=None, meta=meta)
+    return QueryResponse(visualization=visualization, summary=summary, meta=meta)
 
 
 def _entity_fetch_kwargs(entities: Entities) -> dict:

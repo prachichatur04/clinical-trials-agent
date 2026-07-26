@@ -3,7 +3,7 @@ import pytest
 from fastapi.testclient import TestClient
 
 from app.ctgov.client import CTGovClient
-from app.main import app, get_ctgov_client, get_llm_client
+from app.main import app, get_ctgov_client, get_llm_client, get_summary_llm_client
 from app.schemas.intent import AnalysisType, Confidence, Entities, Intent, VizType
 from app.utils.rate_limiter import RateLimiter
 
@@ -40,6 +40,14 @@ def _stub_llm(intent: Intent):
     class _Stub:
         async def classify(self, query, extra_context=None):
             return intent
+
+    return _Stub()
+
+
+def _stub_summary(text: str = "Summary text."):
+    class _Stub:
+        async def summarize(self, prompt):
+            return text
 
     return _Stub()
 
@@ -150,3 +158,33 @@ def test_default_ctgov_and_llm_clients_used_when_not_overridden():
     # by checking the dependency functions themselves.
     assert get_ctgov_client() is None
     assert get_llm_client() is None
+
+
+def test_include_summary_true_returns_summary_from_injected_client():
+    def handler(request: httpx.Request) -> httpx.Response:
+        return _page_response([_study("NCT1")], total_count=1)
+
+    app.dependency_overrides[get_ctgov_client] = lambda: _mock_ctgov_client(handler)
+    app.dependency_overrides[get_llm_client] = lambda: _stub_llm(_intent(AnalysisType.DISTRIBUTION))
+    app.dependency_overrides[get_summary_llm_client] = lambda: _stub_summary("Phase 1 dominates.")
+
+    response = client.post(
+        "/query", json={"query": "How are trials distributed across phases?", "include_summary": True}
+    )
+
+    assert response.status_code == 200
+    assert response.json()["summary"] == "Phase 1 dominates."
+
+
+def test_include_summary_default_false_leaves_summary_null():
+    def handler(request: httpx.Request) -> httpx.Response:
+        return _page_response([_study("NCT1")], total_count=1)
+
+    app.dependency_overrides[get_ctgov_client] = lambda: _mock_ctgov_client(handler)
+    app.dependency_overrides[get_llm_client] = lambda: _stub_llm(_intent(AnalysisType.DISTRIBUTION))
+    app.dependency_overrides[get_summary_llm_client] = lambda: _stub_summary("should not appear")
+
+    response = client.post("/query", json={"query": "How are trials distributed across phases?"})
+
+    assert response.status_code == 200
+    assert response.json()["summary"] is None

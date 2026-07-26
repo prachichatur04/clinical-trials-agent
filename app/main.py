@@ -13,6 +13,7 @@ from app.intent.llm_client import IntentLLMClient
 from app.pipeline import run_pipeline
 from app.schemas.request import QueryRequest
 from app.schemas.response import QueryResponse
+from app.services.summary_generator import SummaryLLMClient
 
 logger = logging.getLogger(__name__)
 
@@ -67,6 +68,13 @@ def get_llm_client() -> IntentLLMClient | None:
     return None
 
 
+def get_summary_llm_client() -> SummaryLLMClient | None:
+    """None tells generate_summary to construct its own SummaryLLMClient
+    (which returns no summary at all if no API key is configured).
+    Overridden in tests to inject a stub."""
+    return None
+
+
 @app.get("/health")
 async def health() -> dict:
     return {"status": "ok"}
@@ -77,8 +85,11 @@ async def query(
     request: QueryRequest,
     ctgov_client: CTGovClient | None = Depends(get_ctgov_client),
     llm_client: IntentLLMClient | None = Depends(get_llm_client),
+    summary_llm_client: SummaryLLMClient | None = Depends(get_summary_llm_client),
 ) -> QueryResponse:
-    return await run_pipeline(request, ctgov_client=ctgov_client, llm_client=llm_client)
+    return await run_pipeline(
+        request, ctgov_client=ctgov_client, llm_client=llm_client, summary_llm_client=summary_llm_client
+    )
 
 
 # A demo UI (app/static/index.html) is served from "/" starting in Phase 7 --

@@ -102,6 +102,19 @@ def test_run_distribution_reports_multi_phase_assumption():
     assert "Phase 1/Phase 2" in result.aggregated.assumptions[0]
 
 
+def test_run_distribution_na_bucket_not_mistaken_for_multi_phase():
+    # Regression: "N/A" contains a literal "/" too -- must not be counted
+    # as a combined multi-phase bucket, and must not appear in the assumption.
+    records = [
+        _record("NCT1", phases=[]),  # -> "N/A"
+        _record("NCT2", phases=["PHASE1", "PHASE2"]),  # -> "Phase 1/Phase 2"
+    ]
+    result = run_distribution(records, _intent(Entities(dimension="phase")))
+    assumption = result.aggregated.assumptions[0]
+    assert "1 studies" in assumption
+    assert "N/A" not in assumption
+
+
 def test_run_distribution_no_multi_phase_assumption_for_other_dimensions():
     records = [_record("NCT1", overall_status="RECRUITING")]
     result = run_distribution(records, _intent(Entities(dimension="status")))

@@ -124,7 +124,9 @@ def _title_for(intent: Intent, suffix: str) -> str:
 
 
 def _phase_multivalue_assumption(buckets: list[Bucket]) -> list[str]:
-    combined = [b for b in buckets if "/" in b.key]
+    # "N/A" (no phase recorded) contains a literal "/" too -- exclude it
+    # explicitly so it isn't mistaken for a combined multi-phase bucket.
+    combined = [b for b in buckets if b.key != "N/A" and "/" in b.key]
     if not combined:
         return []
     total = sum(b.count for b in combined)

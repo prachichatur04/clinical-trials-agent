@@ -36,8 +36,7 @@ def _make_intent(analysis_type=AnalysisType.TREND, start_year=None, end_year=Non
     return Intent(**defaults)
 
 
-async def test_missing_api_key_uses_heuristic_fallback(monkeypatch):
-    monkeypatch.delenv("OPENAI_API_KEY", raising=False)
+async def test_missing_api_key_uses_heuristic_fallback(no_openai_key):
     request = QueryRequest(query="How are trials distributed across phases?")
 
     result = await parse_intent(request, llm_client=None)

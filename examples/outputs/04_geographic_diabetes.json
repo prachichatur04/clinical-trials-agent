@@ -1,0 +1,540 @@
+{
+  "visualization": {
+    "type": "bar_chart",
+    "title": "diabetes: trials by country",
+    "encoding": {
+      "x": {
+        "field": "country",
+        "type": "nominal"
+      },
+      "y": {
+        "field": "count",
+        "type": "quantitative"
+      },
+      "series": null,
+      "nodes": null,
+      "edges": null
+    },
+    "data": [
+      {
+        "x": "United States",
+        "y": 78,
+        "series": null,
+        "citations": [
+          {
+            "nct_id": "NCT02734277",
+            "field_path": "protocolSection.contactsLocationsModule.locations",
+            "excerpt": "United States",
+            "url": "https://clinicaltrials.gov/study/NCT02734277"
+          },
+          {
+            "nct_id": "NCT03481829",
+            "field_path": "protocolSection.contactsLocationsModule.locations",
+            "excerpt": "United States",
+            "url": "https://clinicaltrials.gov/study/NCT03481829"
+          },
+          {
+            "nct_id": "NCT03540758",
+            "field_path": "protocolSection.contactsLocationsModule.locations",
+            "excerpt": "United States",
+            "url": "https://clinicaltrials.gov/study/NCT03540758"
+          }
+        ]
+      },
+      {
+        "x": "China",
+        "y": 20,
+        "series": null,
+        "citations": [
+          {
+            "nct_id": "NCT04529889",
+            "field_path": "protocolSection.contactsLocationsModule.locations",
+            "excerpt": "China",
+            "url": "https://clinicaltrials.gov/study/NCT04529889"
+          },
+          {
+            "nct_id": "NCT04544527",
+            "field_path": "protocolSection.contactsLocationsModule.locations",
+            "excerpt": "China",
+            "url": "https://clinicaltrials.gov/study/NCT04544527"
+          },
+          {
+            "nct_id": "NCT05349955",
+            "field_path": "protocolSection.contactsLocationsModule.locations",
+            "excerpt": "China",
+            "url": "https://clinicaltrials.gov/study/NCT05349955"
+          }
+        ]
+      },
+      {
+        "x": "France",
+        "y": 14,
+        "series": null,
+        "citations": [
+          {
+            "nct_id": "NCT03449784",
+            "field_path": "protocolSection.contactsLocationsModule.locations",
+            "excerpt": "France",
+            "url": "https://clinicaltrials.gov/study/NCT03449784"
+          },
+          {
+            "nct_id": "NCT03716401",
+            "field_path": "protocolSection.contactsLocationsModule.locations",
+            "excerpt": "France",
+            "url": "https://clinicaltrials.gov/study/NCT03716401"
+          },
+          {
+            "nct_id": "NCT04258293",
+            "field_path": "protocolSection.contactsLocationsModule.locations",
+            "excerpt": "France",
+            "url": "https://clinicaltrials.gov/study/NCT04258293"
+          }
+        ]
+      },
+      {
+        "x": "Canada",
+        "y": 12,
+        "series": null,
+        "citations": [
+          {
+            "nct_id": "NCT05099939",
+            "field_path": "protocolSection.contactsLocationsModule.locations",
+            "excerpt": "Canada",
+            "url": "https://clinicaltrials.gov/study/NCT05099939"
+          },
+          {
+            "nct_id": "NCT05123963",
+            "field_path": "protocolSection.contactsLocationsModule.locations",
+            "excerpt": "Canada",
+            "url": "https://clinicaltrials.gov/study/NCT05123963"
+          },
+          {
+            "nct_id": "NCT05269589",
+            "field_path": "protocolSection.contactsLocationsModule.locations",
+            "excerpt": "Canada",
+            "url": "https://clinicaltrials.gov/study/NCT05269589"
+          }
+        ]
+      },
+      {
+        "x": "United Kingdom",
+        "y": 12,
+        "series": null,
+        "citations": [
+          {
+            "nct_id": "NCT03716401",
+            "field_path": "protocolSection.contactsLocationsModule.locations",
+            "excerpt": "United Kingdom",
+            "url": "https://clinicaltrials.gov/study/NCT03716401"
+          },
+          {
+            "nct_id": "NCT03842475",
+            "field_path": "protocolSection.contactsLocationsModule.locations",
+            "excerpt": "United Kingdom",
+            "url": "https://clinicaltrials.gov/study/NCT03842475"
+          },
+          {
+            "nct_id": "NCT04735835",
+            "field_path": "protocolSection.contactsLocationsModule.locations",
+            "excerpt": "United Kingdom",
+            "url": "https://clinicaltrials.gov/study/NCT04735835"
+          }
+        ]
+      },
+      {
+        "x": "Denmark",
+        "y": 8,
+        "series": null,
+        "citations": [
+          {
+            "nct_id": "NCT04699734",
+            "field_path": "protocolSection.contactsLocationsModule.locations",
+            "excerpt": "Denmark",
+            "url": "https://clinicaltrials.gov/study/NCT04699734"
+          },
+          {
+            "nct_id": "NCT04941794",
+            "field_path": "protocolSection.contactsLocationsModule.locations",
+            "excerpt": "Denmark",
+            "url": "https://clinicaltrials.gov/study/NCT04941794"
+          },
+          {
+            "nct_id": "NCT05663515",
+            "field_path": "protocolSection.contactsLocationsModule.locations",
+            "excerpt": "Denmark",
+            "url": "https://clinicaltrials.gov/study/NCT05663515"
+          }
+        ]
+      },
+      {
+        "x": "Germany",
+        "y": 8,
+        "series": null,
+        "citations": [
+          {
+            "nct_id": "NCT04039945",
+            "field_path": "protocolSection.contactsLocationsModule.locations",
+            "excerpt": "Germany",
+            "url": "https://clinicaltrials.gov/study/NCT04039945"
+          },
+          {
+            "nct_id": "NCT06054035",
+            "field_path": "protocolSection.contactsLocationsModule.locations",
+            "excerpt": "Germany",
+            "url": "https://clinicaltrials.gov/study/NCT06054035"
+          },
+          {
+            "nct_id": "NCT06124586",
+            "field_path": "protocolSection.contactsLocationsModule.locations",
+            "excerpt": "Germany",
+            "url": "https://clinicaltrials.gov/study/NCT06124586"
+          }
+        ]
+      },
+      {
+        "x": "Italy",
+        "y": 6,
+        "series": null,
+        "citations": [
+          {
+            "nct_id": "NCT02038517",
+            "field_path": "protocolSection.contactsLocationsModule.locations",
+            "excerpt": "Italy",
+            "url": "https://clinicaltrials.gov/study/NCT02038517"
+          },
+          {
+            "nct_id": "NCT03716401",
+            "field_path": "protocolSection.contactsLocationsModule.locations",
+            "excerpt": "Italy",
+            "url": "https://clinicaltrials.gov/study/NCT03716401"
+          },
+          {
+            "nct_id": "NCT06277362",
+            "field_path": "protocolSection.contactsLocationsModule.locations",
+            "excerpt": "Italy",
+            "url": "https://clinicaltrials.gov/study/NCT06277362"
+          }
+        ]
+      },
+      {
+        "x": "Sweden",
+        "y": 5,
+        "series": null,
+        "citations": [
+          {
+            "nct_id": "NCT03716401",
+            "field_path": "protocolSection.contactsLocationsModule.locations",
+            "excerpt": "Sweden",
+            "url": "https://clinicaltrials.gov/study/NCT03716401"
+          },
+          {
+            "nct_id": "NCT05663515",
+            "field_path": "protocolSection.contactsLocationsModule.locations",
+            "excerpt": "Sweden",
+            "url": "https://clinicaltrials.gov/study/NCT05663515"
+          },
+          {
+            "nct_id": "NCT06549023",
+            "field_path": "protocolSection.contactsLocationsModule.locations",
+            "excerpt": "Sweden",
+            "url": "https://clinicaltrials.gov/study/NCT06549023"
+          }
+        ]
+      },
+      {
+        "x": "Hong Kong",
+        "y": 4,
+        "series": null,
+        "citations": [
+          {
+            "nct_id": "NCT06273761",
+            "field_path": "protocolSection.contactsLocationsModule.locations",
+            "excerpt": "Hong Kong",
+            "url": "https://clinicaltrials.gov/study/NCT06273761"
+          },
+          {
+            "nct_id": "NCT06466837",
+            "field_path": "protocolSection.contactsLocationsModule.locations",
+            "excerpt": "Hong Kong",
+            "url": "https://clinicaltrials.gov/study/NCT06466837"
+          },
+          {
+            "nct_id": "NCT06980701",
+            "field_path": "protocolSection.contactsLocationsModule.locations",
+            "excerpt": "Hong Kong",
+            "url": "https://clinicaltrials.gov/study/NCT06980701"
+          }
+        ]
+      },
+      {
+        "x": "Spain",
+        "y": 4,
+        "series": null,
+        "citations": [
+          {
+            "nct_id": "NCT05663515",
+            "field_path": "protocolSection.contactsLocationsModule.locations",
+            "excerpt": "Spain",
+            "url": "https://clinicaltrials.gov/study/NCT05663515"
+          },
+          {
+            "nct_id": "NCT05769868",
+            "field_path": "protocolSection.contactsLocationsModule.locations",
+            "excerpt": "Spain",
+            "url": "https://clinicaltrials.gov/study/NCT05769868"
+          },
+          {
+            "nct_id": "NCT06234787",
+            "field_path": "protocolSection.contactsLocationsModule.locations",
+            "excerpt": "Spain",
+            "url": "https://clinicaltrials.gov/study/NCT06234787"
+          }
+        ]
+      },
+      {
+        "x": "Switzerland",
+        "y": 4,
+        "series": null,
+        "citations": [
+          {
+            "nct_id": "NCT01224886",
+            "field_path": "protocolSection.contactsLocationsModule.locations",
+            "excerpt": "Switzerland",
+            "url": "https://clinicaltrials.gov/study/NCT01224886"
+          },
+          {
+            "nct_id": "NCT03716401",
+            "field_path": "protocolSection.contactsLocationsModule.locations",
+            "excerpt": "Switzerland",
+            "url": "https://clinicaltrials.gov/study/NCT03716401"
+          },
+          {
+            "nct_id": "NCT05594706",
+            "field_path": "protocolSection.contactsLocationsModule.locations",
+            "excerpt": "Switzerland",
+            "url": "https://clinicaltrials.gov/study/NCT05594706"
+          }
+        ]
+      },
+      {
+        "x": "Turkey (T\u00fcrkiye)",
+        "y": 4,
+        "series": null,
+        "citations": [
+          {
+            "nct_id": "NCT06079463",
+            "field_path": "protocolSection.contactsLocationsModule.locations",
+            "excerpt": "Turkey (T\u00fcrkiye)",
+            "url": "https://clinicaltrials.gov/study/NCT06079463"
+          },
+          {
+            "nct_id": "NCT07057518",
+            "field_path": "protocolSection.contactsLocationsModule.locations",
+            "excerpt": "Turkey (T\u00fcrkiye)",
+            "url": "https://clinicaltrials.gov/study/NCT07057518"
+          },
+          {
+            "nct_id": "NCT07152509",
+            "field_path": "protocolSection.contactsLocationsModule.locations",
+            "excerpt": "Turkey (T\u00fcrkiye)",
+            "url": "https://clinicaltrials.gov/study/NCT07152509"
+          }
+        ]
+      },
+      {
+        "x": "Austria",
+        "y": 3,
+        "series": null,
+        "citations": [
+          {
+            "nct_id": "NCT06323538",
+            "field_path": "protocolSection.contactsLocationsModule.locations",
+            "excerpt": "Austria",
+            "url": "https://clinicaltrials.gov/study/NCT06323538"
+          },
+          {
+            "nct_id": "NCT07440147",
+            "field_path": "protocolSection.contactsLocationsModule.locations",
+            "excerpt": "Austria",
+            "url": "https://clinicaltrials.gov/study/NCT07440147"
+          },
+          {
+            "nct_id": "NCT07459907",
+            "field_path": "protocolSection.contactsLocationsModule.locations",
+            "excerpt": "Austria",
+            "url": "https://clinicaltrials.gov/study/NCT07459907"
+          }
+        ]
+      },
+      {
+        "x": "Brazil",
+        "y": 3,
+        "series": null,
+        "citations": [
+          {
+            "nct_id": "NCT05598203",
+            "field_path": "protocolSection.contactsLocationsModule.locations",
+            "excerpt": "Brazil",
+            "url": "https://clinicaltrials.gov/study/NCT05598203"
+          },
+          {
+            "nct_id": "NCT05706155",
+            "field_path": "protocolSection.contactsLocationsModule.locations",
+            "excerpt": "Brazil",
+            "url": "https://clinicaltrials.gov/study/NCT05706155"
+          },
+          {
+            "nct_id": "NCT06710340",
+            "field_path": "protocolSection.contactsLocationsModule.locations",
+            "excerpt": "Brazil",
+            "url": "https://clinicaltrials.gov/study/NCT06710340"
+          }
+        ]
+      },
+      {
+        "x": "Finland",
+        "y": 3,
+        "series": null,
+        "citations": [
+          {
+            "nct_id": "NCT03716401",
+            "field_path": "protocolSection.contactsLocationsModule.locations",
+            "excerpt": "Finland",
+            "url": "https://clinicaltrials.gov/study/NCT03716401"
+          },
+          {
+            "nct_id": "NCT05663515",
+            "field_path": "protocolSection.contactsLocationsModule.locations",
+            "excerpt": "Finland",
+            "url": "https://clinicaltrials.gov/study/NCT05663515"
+          },
+          {
+            "nct_id": "NCT06486012",
+            "field_path": "protocolSection.contactsLocationsModule.locations",
+            "excerpt": "Finland",
+            "url": "https://clinicaltrials.gov/study/NCT06486012"
+          }
+        ]
+      },
+      {
+        "x": "Ireland",
+        "y": 3,
+        "series": null,
+        "citations": [
+          {
+            "nct_id": "NCT07303439",
+            "field_path": "protocolSection.contactsLocationsModule.locations",
+            "excerpt": "Ireland",
+            "url": "https://clinicaltrials.gov/study/NCT07303439"
+          },
+          {
+            "nct_id": "NCT07420023",
+            "field_path": "protocolSection.contactsLocationsModule.locations",
+            "excerpt": "Ireland",
+            "url": "https://clinicaltrials.gov/study/NCT07420023"
+          },
+          {
+            "nct_id": "NCT07636395",
+            "field_path": "protocolSection.contactsLocationsModule.locations",
+            "excerpt": "Ireland",
+            "url": "https://clinicaltrials.gov/study/NCT07636395"
+          }
+        ]
+      },
+      {
+        "x": "Japan",
+        "y": 3,
+        "series": null,
+        "citations": [
+          {
+            "nct_id": "NCT06236750",
+            "field_path": "protocolSection.contactsLocationsModule.locations",
+            "excerpt": "Japan",
+            "url": "https://clinicaltrials.gov/study/NCT06236750"
+          },
+          {
+            "nct_id": "NCT06278207",
+            "field_path": "protocolSection.contactsLocationsModule.locations",
+            "excerpt": "Japan",
+            "url": "https://clinicaltrials.gov/study/NCT06278207"
+          },
+          {
+            "nct_id": "NCT06694012",
+            "field_path": "protocolSection.contactsLocationsModule.locations",
+            "excerpt": "Japan",
+            "url": "https://clinicaltrials.gov/study/NCT06694012"
+          }
+        ]
+      },
+      {
+        "x": "Singapore",
+        "y": 3,
+        "series": null,
+        "citations": [
+          {
+            "nct_id": "NCT07241221",
+            "field_path": "protocolSection.contactsLocationsModule.locations",
+            "excerpt": "Singapore",
+            "url": "https://clinicaltrials.gov/study/NCT07241221"
+          },
+          {
+            "nct_id": "NCT07252700",
+            "field_path": "protocolSection.contactsLocationsModule.locations",
+            "excerpt": "Singapore",
+            "url": "https://clinicaltrials.gov/study/NCT07252700"
+          },
+          {
+            "nct_id": "NCT07532863",
+            "field_path": "protocolSection.contactsLocationsModule.locations",
+            "excerpt": "Singapore",
+            "url": "https://clinicaltrials.gov/study/NCT07532863"
+          }
+        ]
+      },
+      {
+        "x": "Slovenia",
+        "y": 3,
+        "series": null,
+        "citations": [
+          {
+            "nct_id": "NCT06520839",
+            "field_path": "protocolSection.contactsLocationsModule.locations",
+            "excerpt": "Slovenia",
+            "url": "https://clinicaltrials.gov/study/NCT06520839"
+          },
+          {
+            "nct_id": "NCT07423065",
+            "field_path": "protocolSection.contactsLocationsModule.locations",
+            "excerpt": "Slovenia",
+            "url": "https://clinicaltrials.gov/study/NCT07423065"
+          },
+          {
+            "nct_id": "NCT07448805",
+            "field_path": "protocolSection.contactsLocationsModule.locations",
+            "excerpt": "Slovenia",
+            "url": "https://clinicaltrials.gov/study/NCT07448805"
+          }
+        ]
+      }
+    ],
+    "network_data": null
+  },
+  "summary": "The analysis identified a total of 1969 recruiting trials for diabetes, with the United States having the highest number at 78 trials. China follows with 20 trials, while France has 14 trials. There are potential data quality concerns as only 200 studies were fetched, which may not fully represent the total set of trials available.",
+  "meta": {
+    "query_interpretation": "The query seeks to find out which countries have the highest number of ongoing recruiting trials specifically for diabetes.",
+    "query_plan": "Retrieve data on the number of recruiting clinical trials related to diabetes, broken down by country. This will help identify which countries are leading in terms of trial recruitment for diabetes. The data can be visualized using a bar chart to easily compare the number of trials across different countries.",
+    "analysis_type": "geographic",
+    "filters_applied": {
+      "condition": "diabetes",
+      "status": "RECRUITING",
+      "dimension": "country"
+    },
+    "assumptions": [],
+    "total_studies_matched": 1969,
+    "total_studies_fetched": 200,
+    "unique_study_count": 200,
+    "source": "https://clinicaltrials.gov/api/v2/studies",
+    "generated_at": "2026-07-26T21:34:32.388237Z",
+    "intent_source": "llm"
+  }
+}

@@ -13,5 +13,6 @@ dist/
 build/
 .DS_Store
 .claude/
-examples/outputs/*.json
-!examples/outputs/.gitkeep
+
+# examples/outputs/*.json are committed on purpose -- they're the
+# assignment's required "actual JSON outputs" evidence, not scratch data.

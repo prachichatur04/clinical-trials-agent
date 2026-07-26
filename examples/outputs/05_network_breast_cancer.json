@@ -1,0 +1,707 @@
+{
+  "visualization": {
+    "type": "network_graph",
+    "title": "breast cancer: trial network",
+    "encoding": {
+      "x": null,
+      "y": null,
+      "series": null,
+      "nodes": {
+        "id": "id",
+        "label": "label",
+        "group": "type",
+        "size": "weight"
+      },
+      "edges": {
+        "source": "source",
+        "target": "target",
+        "width": "weight"
+      }
+    },
+    "data": [],
+    "network_data": {
+      "nodes": [
+        {
+          "id": "d_18f_fes",
+          "label": "(18f)fes",
+          "type": "drug",
+          "weight": 1,
+          "nct_ids": [
+            "NCT03703492"
+          ]
+        },
+        {
+          "id": "d_18f_fluoroestradiol_radiopharmaceutical_with_pet_ct",
+          "label": "18f fluoroestradiol radiopharmaceutical with pet/ct",
+          "type": "drug",
+          "weight": 1,
+          "nct_ids": [
+            "NCT05486182"
+          ]
+        },
+        {
+          "id": "d_5_fu_intravenous_bolus_epirubicin_cyclophosphamide",
+          "label": "5-fu\uff08intravenous bolus\uff09+epirubicin+cyclophosphamide",
+          "type": "drug",
+          "weight": 1,
+          "nct_ids": [
+            "NCT01199432"
+          ]
+        },
+        {
+          "id": "d_5_fu_intravenous_infusion_epirubicin_cyclophosphamide",
+          "label": "5-fu\uff08intravenous infusion\uff09+epirubicin+cyclophosphamide",
+          "type": "drug",
+          "weight": 1,
+          "nct_ids": [
+            "NCT01199432"
+          ]
+        },
+        {
+          "id": "d_9_ing_41",
+          "label": "9-ing-41",
+          "type": "drug",
+          "weight": 1,
+          "nct_ids": [
+            "NCT03678883"
+          ]
+        },
+        {
+          "id": "d_a",
+          "label": "a",
+          "type": "drug",
+          "weight": 1,
+          "nct_ids": [
+            "NCT04215003"
+          ]
+        },
+        {
+          "id": "d_alpelisib",
+          "label": "alpelisib",
+          "type": "drug",
+          "weight": 1,
+          "nct_ids": [
+            "NCT05631795"
+          ]
+        },
+        {
+          "id": "d_anastrozole",
+          "label": "anastrozole",
+          "type": "drug",
+          "weight": 1,
+          "nct_ids": [
+            "NCT06930859"
+          ]
+        },
+        {
+          "id": "d_antihistamine",
+          "label": "antihistamine",
+          "type": "drug",
+          "weight": 1,
+          "nct_ids": [
+            "NCT04568902"
+          ]
+        },
+        {
+          "id": "d_apatinib",
+          "label": "apatinib",
+          "type": "drug",
+          "weight": 1,
+          "nct_ids": [
+            "NCT03457467"
+          ]
+        },
+        {
+          "id": "d_artiss",
+          "label": "artiss",
+          "type": "drug",
+          "weight": 1,
+          "nct_ids": [
+            "NCT03305757"
+          ]
+        },
+        {
+          "id": "d_atezolizumab",
+          "label": "atezolizumab",
+          "type": "drug",
+          "weight": 1,
+          "nct_ids": [
+            "NCT03101280"
+          ]
+        },
+        {
+          "id": "d_avelumab",
+          "label": "avelumab",
+          "type": "drug",
+          "weight": 1,
+          "nct_ids": [
+            "NCT03971409"
+          ]
+        },
+        {
+          "id": "d_azd2281",
+          "label": "azd2281",
+          "type": "drug",
+          "weight": 1,
+          "nct_ids": [
+            "NCT00679783"
+          ]
+        },
+        {
+          "id": "d_b",
+          "label": "b",
+          "type": "drug",
+          "weight": 1,
+          "nct_ids": [
+            "NCT04215003"
+          ]
+        },
+        {
+          "id": "d_bg_68501",
+          "label": "bg-68501",
+          "type": "drug",
+          "weight": 1,
+          "nct_ids": [
+            "NCT06257264"
+          ]
+        },
+        {
+          "id": "d_bgb_43395",
+          "label": "bgb-43395",
+          "type": "drug",
+          "weight": 1,
+          "nct_ids": [
+            "NCT06257264"
+          ]
+        },
+        {
+          "id": "d_binimetinib",
+          "label": "binimetinib",
+          "type": "drug",
+          "weight": 1,
+          "nct_ids": [
+            "NCT03971409"
+          ]
+        },
+        {
+          "id": "d_bl_b01d1",
+          "label": "bl-b01d1",
+          "type": "drug",
+          "weight": 1,
+          "nct_ids": [
+            "NCT06382142"
+          ]
+        },
+        {
+          "id": "d_byl719",
+          "label": "byl719",
+          "type": "drug",
+          "weight": 1,
+          "nct_ids": [
+            "NCT02167854"
+          ]
+        },
+        {
+          "id": "d_capecitabine",
+          "label": "capecitabine",
+          "type": "drug",
+          "weight": 8,
+          "nct_ids": [
+            "NCT00153907",
+            "NCT00169000",
+            "NCT01026142",
+            "NCT01323530",
+            "NCT01777945",
+            "NCT02973737",
+            "NCT03858972",
+            "NCT06382142"
+          ]
+        },
+        {
+          "id": "d_carbon_dye",
+          "label": "carbon dye",
+          "type": "drug",
+          "weight": 1,
+          "nct_ids": [
+            "NCT05512468"
+          ]
+        },
+        {
+          "id": "d_carboplatin",
+          "label": "carboplatin",
+          "type": "drug",
+          "weight": 3,
+          "nct_ids": [
+            "NCT00002854",
+            "NCT03678883",
+            "NCT06965361"
+          ]
+        },
+        {
+          "id": "d_cetuximab",
+          "label": "cetuximab",
+          "type": "drug",
+          "weight": 1,
+          "nct_ids": [
+            "NCT05226871"
+          ]
+        },
+        {
+          "id": "d_chemotherapy",
+          "label": "chemotherapy",
+          "type": "drug",
+          "weight": 1,
+          "nct_ids": [
+            "NCT07108309"
+          ]
+        },
+        {
+          "id": "d_cisplatin",
+          "label": "cisplatin",
+          "type": "drug",
+          "weight": 1,
+          "nct_ids": [
+            "NCT00002854"
+          ]
+        },
+        {
+          "id": "d_cyclophosphamide",
+          "label": "cyclophosphamide",
+          "type": "drug",
+          "weight": 2,
+          "nct_ids": [
+            "NCT00002854",
+            "NCT02685657"
+          ]
+        },
+        {
+          "id": "d_docetaxel",
+          "label": "docetaxel",
+          "type": "drug",
+          "weight": 5,
+          "nct_ids": [
+            "NCT00169000",
+            "NCT01301729",
+            "NCT01777945",
+            "NCT02685657",
+            "NCT07377643"
+          ]
+        },
+        {
+          "id": "d_doxorubicin",
+          "label": "doxorubicin",
+          "type": "drug",
+          "weight": 2,
+          "nct_ids": [
+            "NCT02685657",
+            "NCT03678883"
+          ]
+        },
+        {
+          "id": "d_fulvestrant",
+          "label": "fulvestrant",
+          "type": "drug",
+          "weight": 3,
+          "nct_ids": [
+            "NCT05226871",
+            "NCT05631795",
+            "NCT06257264"
+          ]
+        },
+        {
+          "id": "d_letrozole",
+          "label": "letrozole",
+          "type": "drug",
+          "weight": 2,
+          "nct_ids": [
+            "NCT05226871",
+            "NCT06930859"
+          ]
+        },
+        {
+          "id": "d_paclitaxel",
+          "label": "paclitaxel",
+          "type": "drug",
+          "weight": 4,
+          "nct_ids": [
+            "NCT00002854",
+            "NCT01301729",
+            "NCT03678883",
+            "NCT07377643"
+          ]
+        },
+        {
+          "id": "d_pertuzumab",
+          "label": "pertuzumab",
+          "type": "drug",
+          "weight": 2,
+          "nct_ids": [
+            "NCT01026142",
+            "NCT07377643"
+          ]
+        },
+        {
+          "id": "d_placebo",
+          "label": "placebo",
+          "type": "drug",
+          "weight": 2,
+          "nct_ids": [
+            "NCT00588640",
+            "NCT02973737"
+          ]
+        },
+        {
+          "id": "d_trastuzumab",
+          "label": "trastuzumab",
+          "type": "drug",
+          "weight": 4,
+          "nct_ids": [
+            "NCT01026142",
+            "NCT01301729",
+            "NCT02167854",
+            "NCT07377643"
+          ]
+        },
+        {
+          "id": "s_city_of_hope_medical_center",
+          "label": "City of Hope Medical Center",
+          "type": "sponsor",
+          "weight": 2,
+          "nct_ids": [
+            "NCT00002854",
+            "NCT03542695"
+          ]
+        },
+        {
+          "id": "s_fudan_university",
+          "label": "Fudan University",
+          "type": "sponsor",
+          "weight": 3,
+          "nct_ids": [
+            "NCT04215003",
+            "NCT04508803",
+            "NCT07134153"
+          ]
+        },
+        {
+          "id": "s_hoffmann_la_roche",
+          "label": "Hoffmann-La Roche",
+          "type": "sponsor",
+          "weight": 4,
+          "nct_ids": [
+            "NCT01026142",
+            "NCT01301729",
+            "NCT01777945",
+            "NCT03101280"
+          ]
+        },
+        {
+          "id": "s_memorial_sloan_kettering_cancer_center",
+          "label": "Memorial Sloan Kettering Cancer Center",
+          "type": "sponsor",
+          "weight": 4,
+          "nct_ids": [
+            "NCT00588640",
+            "NCT00615901",
+            "NCT02167854",
+            "NCT07042581"
+          ]
+        },
+        {
+          "id": "s_novartis_pharmaceuticals",
+          "label": "Novartis Pharmaceuticals",
+          "type": "sponsor",
+          "weight": 3,
+          "nct_ids": [
+            "NCT00263588",
+            "NCT05631795",
+            "NCT06930859"
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "source": "s_hoffmann_la_roche",
+          "target": "d_capecitabine",
+          "weight": 2,
+          "citations": [
+            {
+              "nct_id": "NCT01026142",
+              "field_path": "protocolSection.sponsorCollaboratorsModule.leadSponsor.name",
+              "excerpt": "Hoffmann-La Roche sponsoring capecitabine",
+              "url": "https://clinicaltrials.gov/study/NCT01026142"
+            },
+            {
+              "nct_id": "NCT01777945",
+              "field_path": "protocolSection.sponsorCollaboratorsModule.leadSponsor.name",
+              "excerpt": "Hoffmann-La Roche sponsoring capecitabine",
+              "url": "https://clinicaltrials.gov/study/NCT01777945"
+            }
+          ]
+        },
+        {
+          "source": "s_hoffmann_la_roche",
+          "target": "d_docetaxel",
+          "weight": 2,
+          "citations": [
+            {
+              "nct_id": "NCT01301729",
+              "field_path": "protocolSection.sponsorCollaboratorsModule.leadSponsor.name",
+              "excerpt": "Hoffmann-La Roche sponsoring docetaxel",
+              "url": "https://clinicaltrials.gov/study/NCT01301729"
+            },
+            {
+              "nct_id": "NCT01777945",
+              "field_path": "protocolSection.sponsorCollaboratorsModule.leadSponsor.name",
+              "excerpt": "Hoffmann-La Roche sponsoring docetaxel",
+              "url": "https://clinicaltrials.gov/study/NCT01777945"
+            }
+          ]
+        },
+        {
+          "source": "s_hoffmann_la_roche",
+          "target": "d_trastuzumab",
+          "weight": 2,
+          "citations": [
+            {
+              "nct_id": "NCT01026142",
+              "field_path": "protocolSection.sponsorCollaboratorsModule.leadSponsor.name",
+              "excerpt": "Hoffmann-La Roche sponsoring trastuzumab",
+              "url": "https://clinicaltrials.gov/study/NCT01026142"
+            },
+            {
+              "nct_id": "NCT01301729",
+              "field_path": "protocolSection.sponsorCollaboratorsModule.leadSponsor.name",
+              "excerpt": "Hoffmann-La Roche sponsoring trastuzumab",
+              "url": "https://clinicaltrials.gov/study/NCT01301729"
+            }
+          ]
+        },
+        {
+          "source": "s_city_of_hope_medical_center",
+          "target": "d_carboplatin",
+          "weight": 1,
+          "citations": [
+            {
+              "nct_id": "NCT00002854",
+              "field_path": "protocolSection.sponsorCollaboratorsModule.leadSponsor.name",
+              "excerpt": "City of Hope Medical Center sponsoring carboplatin",
+              "url": "https://clinicaltrials.gov/study/NCT00002854"
+            }
+          ]
+        },
+        {
+          "source": "s_city_of_hope_medical_center",
+          "target": "d_cisplatin",
+          "weight": 1,
+          "citations": [
+            {
+              "nct_id": "NCT00002854",
+              "field_path": "protocolSection.sponsorCollaboratorsModule.leadSponsor.name",
+              "excerpt": "City of Hope Medical Center sponsoring cisplatin",
+              "url": "https://clinicaltrials.gov/study/NCT00002854"
+            }
+          ]
+        },
+        {
+          "source": "s_city_of_hope_medical_center",
+          "target": "d_cyclophosphamide",
+          "weight": 1,
+          "citations": [
+            {
+              "nct_id": "NCT00002854",
+              "field_path": "protocolSection.sponsorCollaboratorsModule.leadSponsor.name",
+              "excerpt": "City of Hope Medical Center sponsoring cyclophosphamide",
+              "url": "https://clinicaltrials.gov/study/NCT00002854"
+            }
+          ]
+        },
+        {
+          "source": "s_city_of_hope_medical_center",
+          "target": "d_paclitaxel",
+          "weight": 1,
+          "citations": [
+            {
+              "nct_id": "NCT00002854",
+              "field_path": "protocolSection.sponsorCollaboratorsModule.leadSponsor.name",
+              "excerpt": "City of Hope Medical Center sponsoring paclitaxel",
+              "url": "https://clinicaltrials.gov/study/NCT00002854"
+            }
+          ]
+        },
+        {
+          "source": "s_fudan_university",
+          "target": "d_a",
+          "weight": 1,
+          "citations": [
+            {
+              "nct_id": "NCT04215003",
+              "field_path": "protocolSection.sponsorCollaboratorsModule.leadSponsor.name",
+              "excerpt": "Fudan University sponsoring a",
+              "url": "https://clinicaltrials.gov/study/NCT04215003"
+            }
+          ]
+        },
+        {
+          "source": "s_fudan_university",
+          "target": "d_b",
+          "weight": 1,
+          "citations": [
+            {
+              "nct_id": "NCT04215003",
+              "field_path": "protocolSection.sponsorCollaboratorsModule.leadSponsor.name",
+              "excerpt": "Fudan University sponsoring b",
+              "url": "https://clinicaltrials.gov/study/NCT04215003"
+            }
+          ]
+        },
+        {
+          "source": "s_hoffmann_la_roche",
+          "target": "d_atezolizumab",
+          "weight": 1,
+          "citations": [
+            {
+              "nct_id": "NCT03101280",
+              "field_path": "protocolSection.sponsorCollaboratorsModule.leadSponsor.name",
+              "excerpt": "Hoffmann-La Roche sponsoring atezolizumab",
+              "url": "https://clinicaltrials.gov/study/NCT03101280"
+            }
+          ]
+        },
+        {
+          "source": "s_hoffmann_la_roche",
+          "target": "d_paclitaxel",
+          "weight": 1,
+          "citations": [
+            {
+              "nct_id": "NCT01301729",
+              "field_path": "protocolSection.sponsorCollaboratorsModule.leadSponsor.name",
+              "excerpt": "Hoffmann-La Roche sponsoring paclitaxel",
+              "url": "https://clinicaltrials.gov/study/NCT01301729"
+            }
+          ]
+        },
+        {
+          "source": "s_hoffmann_la_roche",
+          "target": "d_pertuzumab",
+          "weight": 1,
+          "citations": [
+            {
+              "nct_id": "NCT01026142",
+              "field_path": "protocolSection.sponsorCollaboratorsModule.leadSponsor.name",
+              "excerpt": "Hoffmann-La Roche sponsoring pertuzumab",
+              "url": "https://clinicaltrials.gov/study/NCT01026142"
+            }
+          ]
+        },
+        {
+          "source": "s_memorial_sloan_kettering_cancer_center",
+          "target": "d_byl719",
+          "weight": 1,
+          "citations": [
+            {
+              "nct_id": "NCT02167854",
+              "field_path": "protocolSection.sponsorCollaboratorsModule.leadSponsor.name",
+              "excerpt": "Memorial Sloan Kettering Cancer Center sponsoring byl719",
+              "url": "https://clinicaltrials.gov/study/NCT02167854"
+            }
+          ]
+        },
+        {
+          "source": "s_memorial_sloan_kettering_cancer_center",
+          "target": "d_placebo",
+          "weight": 1,
+          "citations": [
+            {
+              "nct_id": "NCT00588640",
+              "field_path": "protocolSection.sponsorCollaboratorsModule.leadSponsor.name",
+              "excerpt": "Memorial Sloan Kettering Cancer Center sponsoring placebo",
+              "url": "https://clinicaltrials.gov/study/NCT00588640"
+            }
+          ]
+        },
+        {
+          "source": "s_memorial_sloan_kettering_cancer_center",
+          "target": "d_trastuzumab",
+          "weight": 1,
+          "citations": [
+            {
+              "nct_id": "NCT02167854",
+              "field_path": "protocolSection.sponsorCollaboratorsModule.leadSponsor.name",
+              "excerpt": "Memorial Sloan Kettering Cancer Center sponsoring trastuzumab",
+              "url": "https://clinicaltrials.gov/study/NCT02167854"
+            }
+          ]
+        },
+        {
+          "source": "s_novartis_pharmaceuticals",
+          "target": "d_alpelisib",
+          "weight": 1,
+          "citations": [
+            {
+              "nct_id": "NCT05631795",
+              "field_path": "protocolSection.sponsorCollaboratorsModule.leadSponsor.name",
+              "excerpt": "Novartis Pharmaceuticals sponsoring alpelisib",
+              "url": "https://clinicaltrials.gov/study/NCT05631795"
+            }
+          ]
+        },
+        {
+          "source": "s_novartis_pharmaceuticals",
+          "target": "d_anastrozole",
+          "weight": 1,
+          "citations": [
+            {
+              "nct_id": "NCT06930859",
+              "field_path": "protocolSection.sponsorCollaboratorsModule.leadSponsor.name",
+              "excerpt": "Novartis Pharmaceuticals sponsoring anastrozole",
+              "url": "https://clinicaltrials.gov/study/NCT06930859"
+            }
+          ]
+        },
+        {
+          "source": "s_novartis_pharmaceuticals",
+          "target": "d_fulvestrant",
+          "weight": 1,
+          "citations": [
+            {
+              "nct_id": "NCT05631795",
+              "field_path": "protocolSection.sponsorCollaboratorsModule.leadSponsor.name",
+              "excerpt": "Novartis Pharmaceuticals sponsoring fulvestrant",
+              "url": "https://clinicaltrials.gov/study/NCT05631795"
+            }
+          ]
+        },
+        {
+          "source": "s_novartis_pharmaceuticals",
+          "target": "d_letrozole",
+          "weight": 1,
+          "citations": [
+            {
+              "nct_id": "NCT06930859",
+              "field_path": "protocolSection.sponsorCollaboratorsModule.leadSponsor.name",
+              "excerpt": "Novartis Pharmaceuticals sponsoring letrozole",
+              "url": "https://clinicaltrials.gov/study/NCT06930859"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "summary": "The analysis identified a total of 16,642 studies focused on breast cancer trials, with the top sponsor being Hoffmann-La Roche, which is linked to multiple drugs, including capecitabine, docetaxel, and trastuzumab, each with a weight of 2. Other notable sponsors included City of Hope Medical Center and Fudan University, which are connected to various drugs with a weight of 1. The data retrieved was limited to 200 studies, and there may be concerns regarding the comprehensiveness of this truncated dataset relative to the total number of studies found.",
+  "meta": {
+    "query_interpretation": "The query seeks to visualize the relationships between sponsors and the drugs involved in breast cancer trials in a network format.",
+    "query_plan": "Retrieve data on sponsors and drugs associated with breast cancer clinical trials to analyze their relationships. We will visualize this data in a network graph to illustrate the connections between various sponsors and the drugs they are associated with in breast cancer research.",
+    "analysis_type": "network",
+    "filters_applied": {
+      "condition": "breast cancer"
+    },
+    "assumptions": [],
+    "total_studies_matched": 16642,
+    "total_studies_fetched": 200,
+    "unique_study_count": 200,
+    "source": "https://clinicaltrials.gov/api/v2/studies",
+    "generated_at": "2026-07-26T21:34:35.253145Z",
+    "intent_source": "llm"
+  }
+}

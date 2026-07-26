@@ -47,14 +47,12 @@ def _fake_openai_client(content: str):
     return fake, captured_calls
 
 
-def test_missing_api_key_and_no_client_raises(monkeypatch):
-    monkeypatch.delenv("OPENAI_API_KEY", raising=False)
+def test_missing_api_key_and_no_client_raises(no_openai_key):
     with pytest.raises(LLMUnavailableError):
         IntentLLMClient()
 
 
-def test_explicit_client_bypasses_api_key_requirement(monkeypatch):
-    monkeypatch.delenv("OPENAI_API_KEY", raising=False)
+def test_explicit_client_bypasses_api_key_requirement(no_openai_key):
     fake_client, _ = _fake_openai_client(VALID_INTENT_JSON)
     IntentLLMClient(client=fake_client)  # must not raise
 

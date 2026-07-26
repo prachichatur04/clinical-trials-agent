@@ -81,3 +81,14 @@ def test_system_prompt_requires_non_empty_notes():
 
 def test_system_prompt_clarifies_compare_type_vs_dimension():
     assert "compare_type" in SYSTEM_PROMPT and "dimension" in SYSTEM_PROMPT
+
+
+def test_analysis_type_has_a_description_distinguishing_geographic_from_count():
+    # Verified live: "Which countries have the most recruiting trials for
+    # diabetes?" (the assignment appendix's own geographic example) got
+    # classified as analysis_type=count before this description existed --
+    # the model latched onto "how many" and dropped the country breakdown
+    # entirely. The description must explicitly call this out.
+    description = build_intent_json_schema()["schema"]["properties"]["analysis_type"]["description"]
+    assert "which countries have the most" in description.lower()
+    assert "not count" in description.lower()

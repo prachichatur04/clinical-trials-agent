@@ -55,6 +55,19 @@ _ENTITY_INT_DESCRIPTIONS = {
     "end_year": "End of an explicit year range. Left null for an open-ended range ('since X').",
 }
 
+_ANALYSIS_TYPE_DESCRIPTION = (
+    "trend: how a count changed over time, e.g. 'per year since 2015', 'over time'. "
+    "distribution: breakdown by a single non-geographic dimension -- phase, status, "
+    "sponsor, intervention type. "
+    "comparison: two named entities (drugs/conditions/sponsors) compared side by side. "
+    "geographic: breakdown by country/location -- e.g. 'which countries have the most "
+    "recruiting trials' is geographic, NOT count, even though it asks 'how many' -- the "
+    "question is about the breakdown by country, not a single total. "
+    "network: relationships between entities -- sponsor<->drug or drug<->drug. "
+    "count: a single total number with NO breakdown requested at all, e.g. 'how many "
+    "trials are there for X in total'."
+)
+
 
 def build_intent_json_schema() -> dict:
     """JSON schema for OpenAI Structured Outputs (strict mode).
@@ -80,7 +93,11 @@ def build_intent_json_schema() -> dict:
         "schema": {
             "type": "object",
             "properties": {
-                "analysis_type": {"type": "string", "enum": [t.value for t in AnalysisType]},
+                "analysis_type": {
+                    "type": "string",
+                    "enum": [t.value for t in AnalysisType],
+                    "description": _ANALYSIS_TYPE_DESCRIPTION,
+                },
                 "entities": {
                     "type": "object",
                     "properties": entity_properties,

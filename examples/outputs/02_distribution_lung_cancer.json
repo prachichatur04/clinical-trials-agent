@@ -1,0 +1,211 @@
+{
+  "visualization": {
+    "type": "bar_chart",
+    "title": "lung cancer: trials by phase",
+    "encoding": {
+      "x": {
+        "field": "phase",
+        "type": "nominal"
+      },
+      "y": {
+        "field": "count",
+        "type": "quantitative"
+      },
+      "series": null,
+      "nodes": null,
+      "edges": null
+    },
+    "data": [
+      {
+        "x": "N/A",
+        "y": 74,
+        "series": null,
+        "citations": [
+          {
+            "nct_id": "NCT00165438",
+            "field_path": "protocolSection.designModule.phases",
+            "excerpt": "no phase recorded",
+            "url": "https://clinicaltrials.gov/study/NCT00165438"
+          },
+          {
+            "nct_id": "NCT00325611",
+            "field_path": "protocolSection.designModule.phases",
+            "excerpt": "NA",
+            "url": "https://clinicaltrials.gov/study/NCT00325611"
+          },
+          {
+            "nct_id": "NCT00340340",
+            "field_path": "protocolSection.designModule.phases",
+            "excerpt": "no phase recorded",
+            "url": "https://clinicaltrials.gov/study/NCT00340340"
+          }
+        ]
+      },
+      {
+        "x": "Phase 2",
+        "y": 69,
+        "series": null,
+        "citations": [
+          {
+            "nct_id": "NCT00025610",
+            "field_path": "protocolSection.designModule.phases",
+            "excerpt": "PHASE2",
+            "url": "https://clinicaltrials.gov/study/NCT00025610"
+          },
+          {
+            "nct_id": "NCT00030667",
+            "field_path": "protocolSection.designModule.phases",
+            "excerpt": "PHASE2",
+            "url": "https://clinicaltrials.gov/study/NCT00030667"
+          },
+          {
+            "nct_id": "NCT00033722",
+            "field_path": "protocolSection.designModule.phases",
+            "excerpt": "PHASE2",
+            "url": "https://clinicaltrials.gov/study/NCT00033722"
+          }
+        ]
+      },
+      {
+        "x": "Phase 1",
+        "y": 20,
+        "series": null,
+        "citations": [
+          {
+            "nct_id": "NCT00017537",
+            "field_path": "protocolSection.designModule.phases",
+            "excerpt": "PHASE1",
+            "url": "https://clinicaltrials.gov/study/NCT00017537"
+          },
+          {
+            "nct_id": "NCT00030498",
+            "field_path": "protocolSection.designModule.phases",
+            "excerpt": "PHASE1",
+            "url": "https://clinicaltrials.gov/study/NCT00030498"
+          },
+          {
+            "nct_id": "NCT00923741",
+            "field_path": "protocolSection.designModule.phases",
+            "excerpt": "PHASE1",
+            "url": "https://clinicaltrials.gov/study/NCT00923741"
+          }
+        ]
+      },
+      {
+        "x": "Phase 1/Phase 2",
+        "y": 19,
+        "series": null,
+        "citations": [
+          {
+            "nct_id": "NCT00256841",
+            "field_path": "protocolSection.designModule.phases",
+            "excerpt": "PHASE1, PHASE2",
+            "url": "https://clinicaltrials.gov/study/NCT00256841"
+          },
+          {
+            "nct_id": "NCT00994123",
+            "field_path": "protocolSection.designModule.phases",
+            "excerpt": "PHASE1, PHASE2",
+            "url": "https://clinicaltrials.gov/study/NCT00994123"
+          },
+          {
+            "nct_id": "NCT01757288",
+            "field_path": "protocolSection.designModule.phases",
+            "excerpt": "PHASE1, PHASE2",
+            "url": "https://clinicaltrials.gov/study/NCT01757288"
+          }
+        ]
+      },
+      {
+        "x": "Phase 3",
+        "y": 14,
+        "series": null,
+        "citations": [
+          {
+            "nct_id": "NCT00142532",
+            "field_path": "protocolSection.designModule.phases",
+            "excerpt": "PHASE3",
+            "url": "https://clinicaltrials.gov/study/NCT00142532"
+          },
+          {
+            "nct_id": "NCT00300586",
+            "field_path": "protocolSection.designModule.phases",
+            "excerpt": "PHASE3",
+            "url": "https://clinicaltrials.gov/study/NCT00300586"
+          },
+          {
+            "nct_id": "NCT00457392",
+            "field_path": "protocolSection.designModule.phases",
+            "excerpt": "PHASE3",
+            "url": "https://clinicaltrials.gov/study/NCT00457392"
+          }
+        ]
+      },
+      {
+        "x": "Phase 2/Phase 3",
+        "y": 2,
+        "series": null,
+        "citations": [
+          {
+            "nct_id": "NCT02364557",
+            "field_path": "protocolSection.designModule.phases",
+            "excerpt": "PHASE2, PHASE3",
+            "url": "https://clinicaltrials.gov/study/NCT02364557"
+          },
+          {
+            "nct_id": "NCT03851445",
+            "field_path": "protocolSection.designModule.phases",
+            "excerpt": "PHASE2, PHASE3",
+            "url": "https://clinicaltrials.gov/study/NCT03851445"
+          }
+        ]
+      },
+      {
+        "x": "Early Phase 1",
+        "y": 1,
+        "series": null,
+        "citations": [
+          {
+            "nct_id": "NCT03315065",
+            "field_path": "protocolSection.designModule.phases",
+            "excerpt": "EARLY_PHASE1",
+            "url": "https://clinicaltrials.gov/study/NCT03315065"
+          }
+        ]
+      },
+      {
+        "x": "Phase 4",
+        "y": 1,
+        "series": null,
+        "citations": [
+          {
+            "nct_id": "NCT07674368",
+            "field_path": "protocolSection.designModule.phases",
+            "excerpt": "PHASE4",
+            "url": "https://clinicaltrials.gov/study/NCT07674368"
+          }
+        ]
+      }
+    ],
+    "network_data": null
+  },
+  "summary": "The analysis of lung cancer trials across phases indicates that the majority of studies are categorized under 'N/A' (74 trials), followed by Phase 2 with 69 trials, and significantly fewer in Phase 1 (20 trials) and Phase 3 (14 trials). There are a total of 21 studies that have multiple phases and are reported under combined buckets, which may impact the clarity of the data. Data extraction was limited to 200 studies out of 14,378 total, highlighting potential truncation issues.",
+  "meta": {
+    "query_interpretation": "The query is asking for a breakdown of lung cancer trials by their phases.",
+    "query_plan": "Retrieve data on lung cancer clinical trials and break it down by trial phase to show how many trials are in each phase.",
+    "analysis_type": "distribution",
+    "filters_applied": {
+      "condition": "lung cancer",
+      "dimension": "phase"
+    },
+    "assumptions": [
+      "21 studies have multiple phases and are counted under a combined bucket (e.g. 'Phase 1/Phase 2, Phase 2/Phase 3')."
+    ],
+    "total_studies_matched": 14378,
+    "total_studies_fetched": 200,
+    "unique_study_count": 200,
+    "source": "https://clinicaltrials.gov/api/v2/studies",
+    "generated_at": "2026-07-26T21:34:22.323421Z",
+    "intent_source": "llm"
+  }
+}

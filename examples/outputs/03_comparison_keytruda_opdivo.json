@@ -1,0 +1,317 @@
+{
+  "visualization": {
+    "type": "grouped_bar_chart",
+    "title": "Keytruda vs Opdivo: trials by phase",
+    "encoding": {
+      "x": {
+        "field": "phase",
+        "type": "nominal"
+      },
+      "y": {
+        "field": "count",
+        "type": "quantitative"
+      },
+      "series": null,
+      "nodes": null,
+      "edges": null
+    },
+    "data": [
+      {
+        "x": "N/A",
+        "y": 7,
+        "series": "Keytruda",
+        "citations": [
+          {
+            "nct_id": "NCT02922283",
+            "field_path": "protocolSection.designModule.phases",
+            "excerpt": "NA",
+            "url": "https://clinicaltrials.gov/study/NCT02922283"
+          },
+          {
+            "nct_id": "NCT03769129",
+            "field_path": "protocolSection.designModule.phases",
+            "excerpt": "NA",
+            "url": "https://clinicaltrials.gov/study/NCT03769129"
+          },
+          {
+            "nct_id": "NCT05273827",
+            "field_path": "protocolSection.designModule.phases",
+            "excerpt": "no phase recorded",
+            "url": "https://clinicaltrials.gov/study/NCT05273827"
+          }
+        ]
+      },
+      {
+        "x": "N/A",
+        "y": 15,
+        "series": "Opdivo",
+        "citations": [
+          {
+            "nct_id": "NCT02922283",
+            "field_path": "protocolSection.designModule.phases",
+            "excerpt": "NA",
+            "url": "https://clinicaltrials.gov/study/NCT02922283"
+          },
+          {
+            "nct_id": "NCT03114163",
+            "field_path": "protocolSection.designModule.phases",
+            "excerpt": "no phase recorded",
+            "url": "https://clinicaltrials.gov/study/NCT03114163"
+          },
+          {
+            "nct_id": "NCT03652142",
+            "field_path": "protocolSection.designModule.phases",
+            "excerpt": "no phase recorded",
+            "url": "https://clinicaltrials.gov/study/NCT03652142"
+          }
+        ]
+      },
+      {
+        "x": "Phase 1",
+        "y": 15,
+        "series": "Keytruda",
+        "citations": [
+          {
+            "nct_id": "NCT02054806",
+            "field_path": "protocolSection.designModule.phases",
+            "excerpt": "PHASE1",
+            "url": "https://clinicaltrials.gov/study/NCT02054806"
+          },
+          {
+            "nct_id": "NCT02443324",
+            "field_path": "protocolSection.designModule.phases",
+            "excerpt": "PHASE1",
+            "url": "https://clinicaltrials.gov/study/NCT02443324"
+          },
+          {
+            "nct_id": "NCT03144245",
+            "field_path": "protocolSection.designModule.phases",
+            "excerpt": "PHASE1",
+            "url": "https://clinicaltrials.gov/study/NCT03144245"
+          }
+        ]
+      },
+      {
+        "x": "Phase 1",
+        "y": 19,
+        "series": "Opdivo",
+        "citations": [
+          {
+            "nct_id": "NCT00441337",
+            "field_path": "protocolSection.designModule.phases",
+            "excerpt": "PHASE1",
+            "url": "https://clinicaltrials.gov/study/NCT00441337"
+          },
+          {
+            "nct_id": "NCT01358721",
+            "field_path": "protocolSection.designModule.phases",
+            "excerpt": "PHASE1",
+            "url": "https://clinicaltrials.gov/study/NCT01358721"
+          },
+          {
+            "nct_id": "NCT01629758",
+            "field_path": "protocolSection.designModule.phases",
+            "excerpt": "PHASE1",
+            "url": "https://clinicaltrials.gov/study/NCT01629758"
+          }
+        ]
+      },
+      {
+        "x": "Phase 1/Phase 2",
+        "y": 17,
+        "series": "Keytruda",
+        "citations": [
+          {
+            "nct_id": "NCT02325557",
+            "field_path": "protocolSection.designModule.phases",
+            "excerpt": "PHASE1, PHASE2",
+            "url": "https://clinicaltrials.gov/study/NCT02325557"
+          },
+          {
+            "nct_id": "NCT02437136",
+            "field_path": "protocolSection.designModule.phases",
+            "excerpt": "PHASE1, PHASE2",
+            "url": "https://clinicaltrials.gov/study/NCT02437136"
+          },
+          {
+            "nct_id": "NCT02706353",
+            "field_path": "protocolSection.designModule.phases",
+            "excerpt": "PHASE1, PHASE2",
+            "url": "https://clinicaltrials.gov/study/NCT02706353"
+          }
+        ]
+      },
+      {
+        "x": "Phase 1/Phase 2",
+        "y": 18,
+        "series": "Opdivo",
+        "citations": [
+          {
+            "nct_id": "NCT01968109",
+            "field_path": "protocolSection.designModule.phases",
+            "excerpt": "PHASE1, PHASE2",
+            "url": "https://clinicaltrials.gov/study/NCT01968109"
+          },
+          {
+            "nct_id": "NCT02598960",
+            "field_path": "protocolSection.designModule.phases",
+            "excerpt": "PHASE1, PHASE2",
+            "url": "https://clinicaltrials.gov/study/NCT02598960"
+          },
+          {
+            "nct_id": "NCT03184870",
+            "field_path": "protocolSection.designModule.phases",
+            "excerpt": "PHASE1, PHASE2",
+            "url": "https://clinicaltrials.gov/study/NCT03184870"
+          }
+        ]
+      },
+      {
+        "x": "Phase 2",
+        "y": 49,
+        "series": "Keytruda",
+        "citations": [
+          {
+            "nct_id": "NCT02423863",
+            "field_path": "protocolSection.designModule.phases",
+            "excerpt": "PHASE2",
+            "url": "https://clinicaltrials.gov/study/NCT02423863"
+          },
+          {
+            "nct_id": "NCT02437071",
+            "field_path": "protocolSection.designModule.phases",
+            "excerpt": "PHASE2",
+            "url": "https://clinicaltrials.gov/study/NCT02437071"
+          },
+          {
+            "nct_id": "NCT02574598",
+            "field_path": "protocolSection.designModule.phases",
+            "excerpt": "PHASE2",
+            "url": "https://clinicaltrials.gov/study/NCT02574598"
+          }
+        ]
+      },
+      {
+        "x": "Phase 2",
+        "y": 44,
+        "series": "Opdivo",
+        "citations": [
+          {
+            "nct_id": "NCT01703949",
+            "field_path": "protocolSection.designModule.phases",
+            "excerpt": "PHASE2",
+            "url": "https://clinicaltrials.gov/study/NCT01703949"
+          },
+          {
+            "nct_id": "NCT02259621",
+            "field_path": "protocolSection.designModule.phases",
+            "excerpt": "PHASE2",
+            "url": "https://clinicaltrials.gov/study/NCT02259621"
+          },
+          {
+            "nct_id": "NCT02339558",
+            "field_path": "protocolSection.designModule.phases",
+            "excerpt": "PHASE2",
+            "url": "https://clinicaltrials.gov/study/NCT02339558"
+          }
+        ]
+      },
+      {
+        "x": "Phase 3",
+        "y": 11,
+        "series": "Keytruda",
+        "citations": [
+          {
+            "nct_id": "NCT02578680",
+            "field_path": "protocolSection.designModule.phases",
+            "excerpt": "PHASE3",
+            "url": "https://clinicaltrials.gov/study/NCT02578680"
+          },
+          {
+            "nct_id": "NCT03774732",
+            "field_path": "protocolSection.designModule.phases",
+            "excerpt": "PHASE3",
+            "url": "https://clinicaltrials.gov/study/NCT03774732"
+          },
+          {
+            "nct_id": "NCT03793179",
+            "field_path": "protocolSection.designModule.phases",
+            "excerpt": "PHASE3",
+            "url": "https://clinicaltrials.gov/study/NCT03793179"
+          }
+        ]
+      },
+      {
+        "x": "Phase 3",
+        "y": 3,
+        "series": "Opdivo",
+        "citations": [
+          {
+            "nct_id": "NCT02617589",
+            "field_path": "protocolSection.designModule.phases",
+            "excerpt": "PHASE3",
+            "url": "https://clinicaltrials.gov/study/NCT02617589"
+          },
+          {
+            "nct_id": "NCT05678673",
+            "field_path": "protocolSection.designModule.phases",
+            "excerpt": "PHASE3",
+            "url": "https://clinicaltrials.gov/study/NCT05678673"
+          },
+          {
+            "nct_id": "NCT07672223",
+            "field_path": "protocolSection.designModule.phases",
+            "excerpt": "PHASE3",
+            "url": "https://clinicaltrials.gov/study/NCT07672223"
+          }
+        ]
+      },
+      {
+        "x": "Phase 4",
+        "y": 1,
+        "series": "Keytruda",
+        "citations": [
+          {
+            "nct_id": "NCT04489888",
+            "field_path": "protocolSection.designModule.phases",
+            "excerpt": "PHASE4",
+            "url": "https://clinicaltrials.gov/study/NCT04489888"
+          }
+        ]
+      },
+      {
+        "x": "Phase 4",
+        "y": 1,
+        "series": "Opdivo",
+        "citations": [
+          {
+            "nct_id": "NCT07459543",
+            "field_path": "protocolSection.designModule.phases",
+            "excerpt": "PHASE4",
+            "url": "https://clinicaltrials.gov/study/NCT07459543"
+          }
+        ]
+      }
+    ],
+    "network_data": null
+  },
+  "summary": "The analysis shows that there are more studies involving Opdivo in the N/A category (15) compared to Keytruda (7), and in Phase 1, Opdivo also has a higher count (19) than Keytruda (15). Additionally, Keytruda leads in Phase 2 trials with 49 studies compared to Opdivo's 44, while in Phase 3, Keytruda has 11 studies, significantly more than Opdivo's 3. It is important to note that the data set may not be comprehensive as it only includes a subset of the total studies matched (200 out of 4923).",
+  "meta": {
+    "query_interpretation": "The query asks to compare the trial phases for the drugs Keytruda and Opdivo.",
+    "query_plan": "Retrieve the phases of clinical trials for Keytruda and Opdivo, and compare the frequency of trials across different phases for both drugs. Visualize the comparison with a grouped bar chart, where each group represents a phase and bars represent the number of trials for each drug in that phase.",
+    "analysis_type": "comparison",
+    "filters_applied": {
+      "dimension": "phase",
+      "compare_a": "Keytruda",
+      "compare_b": "Opdivo",
+      "compare_type": "drug"
+    },
+    "assumptions": [],
+    "total_studies_matched": 4923,
+    "total_studies_fetched": 200,
+    "unique_study_count": 189,
+    "source": "https://clinicaltrials.gov/api/v2/studies",
+    "generated_at": "2026-07-26T21:34:25.738529Z",
+    "intent_source": "llm"
+  }
+}

@@ -3,7 +3,7 @@ from datetime import UTC, datetime
 from app.analysis.dispatch import ANALYSIS_DISPATCH, run_comparison, run_count
 from app.ctgov.client import CTGovClient
 from app.ctgov.record_extractor import extract_record
-from app.exceptions import NoResultsError
+from app.exceptions import NoResultsError, UnsupportedQueryError
 from app.intent.llm_client import IntentLLMClient
 from app.intent.parser import parse_intent
 from app.schemas.intent import AnalysisType, Confidence, Entities, Intent
@@ -30,6 +30,12 @@ async def run_pipeline(
     generated_at = datetime.now(UTC)
     parsed = await parse_intent(request, llm_client=llm_client)
     intent = _apply_request_overrides(parsed.intent, request)
+
+    if not _has_any_scoping_entity(intent.entities):
+        raise UnsupportedQueryError(
+            "Could not identify a drug, condition, sponsor, or other clinical-trial filter in this query.",
+            suggestion="Try including a specific drug name, condition, sponsor, or date range.",
+        )
 
     client = ctgov_client or CTGovClient()
     try:
@@ -131,6 +137,34 @@ def _apply_request_overrides(intent: Intent, request: QueryRequest) -> Intent:
         intent.query_plan = f"{intent.query_plan} ({override_note})".strip()
 
     return intent
+
+
+_SCOPING_ENTITY_FIELDS = (
+    "drug_name",
+    "condition",
+    "sponsor",
+    "country",
+    "status",
+    "trial_phase",
+    "start_year",
+    "end_year",
+    "compare_a",
+    "compare_b",
+)
+
+
+def _has_any_scoping_entity(entities: Entities) -> bool:
+    """True if the query (or the caller's own structured fields) identified
+    at least one thing to actually filter by. Without this check, a query
+    with no recognizable entity at all -- a name, a typo, gibberish --
+    still produces a well-formed-looking response: no query.*/filter.*
+    params get built, so the fetch is completely unscoped and silently
+    returns stats for the entire ClinicalTrials.gov database instead of
+    failing loudly. `dimension` deliberately doesn't count here: it only
+    controls how already-fetched records get bucketed, not what gets
+    fetched, so setting it alone doesn't scope anything.
+    """
+    return any(getattr(entities, field) is not None for field in _SCOPING_ENTITY_FIELDS)
 
 
 def _entity_fetch_kwargs(entities: Entities) -> dict:

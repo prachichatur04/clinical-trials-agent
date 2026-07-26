@@ -1,5 +1,5 @@
 import re
-from datetime import date, datetime
+from datetime import UTC, date, datetime
 
 from dateutil import parser as dateutil_parser
 
@@ -16,7 +16,7 @@ def parse_date(date_str: str | None) -> date | None:
     if not date_str:
         return None
     try:
-        parsed = dateutil_parser.parse(date_str, default=datetime(1900, 1, 1))
+        parsed = dateutil_parser.parse(date_str, default=datetime(1900, 1, 1, tzinfo=UTC))
     except (ValueError, OverflowError, TypeError):
         return None
     if not (_MIN_YEAR <= parsed.year <= _MAX_YEAR):

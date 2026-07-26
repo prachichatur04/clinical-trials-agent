@@ -110,7 +110,13 @@ def test_too_short_query_returns_structured_422():
     response = client.post("/query", json={"query": "hi"})
 
     assert response.status_code == 422
-    assert response.json()["error_type"] == "validation_error"
+    body = response.json()
+    assert body["error_type"] == "validation_error"
+    # Human-readable ("query: ..."), not FastAPI's raw error-dump string --
+    # found while manually driving the demo UI, where the raw dump showed
+    # up verbatim in the error banner.
+    assert body["message"].startswith("query:")
+    assert "loc" not in body["message"]
 
 
 def test_empty_results_returns_200_structured_no_results_not_500():

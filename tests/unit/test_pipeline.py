@@ -313,3 +313,67 @@ async def test_summary_generation_failure_does_not_fail_the_request():
 
     assert response.summary is None
     assert response.visualization.type == VizType.BAR_CHART
+
+
+# --- request field overrides (ground truth beats Touch 1's guess) ----------
+
+
+async def test_request_compare_a_and_b_force_comparison_without_an_llm():
+    # The heuristic path alone can never produce analysis_type=comparison
+    # (no NER), so this is the only way to reach it without an LLM key --
+    # explicit structured fields are stronger evidence than keyword regex.
+    captured_calls = []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        captured_calls.append(request.url.params.get("query.intr"))
+        return _page_response([_study("NCT1")], total_count=1)
+
+    client = _mock_client(handler)
+    request = QueryRequest(
+        query="Compare Keytruda vs Opdivo by phase.",
+        compare_a="Keytruda",
+        compare_b="Opdivo",
+        compare_type="drug",
+        dimension="phase",
+    )
+
+    response = await run_pipeline(request, ctgov_client=client, llm_client=None)
+
+    assert response.visualization.type == VizType.GROUPED_BAR_CHART
+    assert response.meta.analysis_type == AnalysisType.COMPARISON
+    assert set(captured_calls) == {"Keytruda", "Opdivo"}
+    # query_plan/notes should reflect the forced override, not silently
+    # keep describing whatever Touch 1 originally guessed (the same class
+    # of inconsistency fixed in schemas/intent.py's downgrade path).
+    assert "overridden to comparison" in response.meta.query_plan
+
+
+async def test_request_drug_name_overrides_llm_guessed_entity():
+    captured_calls = []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        captured_calls.append(request.url.params.get("query.intr"))
+        return _page_response([_study("NCT1")], total_count=1)
+
+    client = _mock_client(handler)
+    # LLM guessed a different (or no) drug_name from the text alone.
+    llm = _stub_llm(_intent(AnalysisType.DISTRIBUTION, entities=Entities(drug_name="wrong-guess")))
+    request = QueryRequest(query="How are trials distributed?", drug_name="Pembrolizumab")
+
+    response = await run_pipeline(request, ctgov_client=client, llm_client=llm)
+
+    assert captured_calls == ["Pembrolizumab"]
+    assert response.meta.filters_applied["drug_name"] == "Pembrolizumab"
+
+
+async def test_request_fields_left_unset_do_not_clobber_llm_extracted_entities():
+    def handler(request: httpx.Request) -> httpx.Response:
+        return _page_response([_study("NCT1")], total_count=1)
+
+    client = _mock_client(handler)
+    llm = _stub_llm(_intent(AnalysisType.DISTRIBUTION, entities=Entities(drug_name="from-llm")))
+    request = QueryRequest(query="How are trials distributed?")  # no drug_name supplied
+
+    response = await run_pipeline(request, ctgov_client=client, llm_client=llm)
+
+    assert response.meta.filters_applied["drug_name"] == "from-llm"

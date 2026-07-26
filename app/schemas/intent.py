@@ -67,7 +67,11 @@ class Intent(BaseModel):
         if is_comparison and not has_both_entities:
             self.analysis_type = AnalysisType.DISTRIBUTION
             self.confidence = Confidence.LOW
-            self.notes = (
-                f"{self.notes} (downgraded from comparison: missing compare_a/compare_b)".strip()
-            )
+            downgrade_note = "downgraded from comparison: missing compare_a/compare_b"
+            self.notes = f"{self.notes} ({downgrade_note})".strip()
+            # query_plan is a separate free-text field describing the
+            # original plan -- without this, it would keep describing the
+            # pre-downgrade analysis_type while meta.analysis_type (and
+            # notes) correctly show the downgraded one.
+            self.query_plan = f"{self.query_plan} ({downgrade_note})".strip()
         return self

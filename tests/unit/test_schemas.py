@@ -71,6 +71,28 @@ def test_max_studies_at_hard_cap_is_valid():
     assert req.max_studies == 5000
 
 
+def test_compare_fields_and_dimension_are_optional_and_none_by_default():
+    req = QueryRequest(query="How are trials distributed across phases?")
+    assert req.compare_a is None
+    assert req.compare_b is None
+    assert req.compare_type is None
+    assert req.dimension is None
+
+
+def test_compare_fields_and_dimension_accept_explicit_values():
+    req = QueryRequest(
+        query="Compare Keytruda vs Opdivo by phase.",
+        compare_a="Keytruda",
+        compare_b="Opdivo",
+        compare_type="drug",
+        dimension="phase",
+    )
+    assert req.compare_a == "Keytruda"
+    assert req.compare_b == "Opdivo"
+    assert req.compare_type == "drug"
+    assert req.dimension == "phase"
+
+
 # --- Intent -------------------------------------------------------------
 
 
@@ -100,6 +122,20 @@ def test_comparison_missing_compare_b_downgrades_to_distribution():
     assert intent.analysis_type == AnalysisType.DISTRIBUTION
     assert intent.confidence == Confidence.LOW
     assert "downgraded from comparison" in intent.notes
+
+
+def test_comparison_downgrade_also_annotates_query_plan_not_just_notes():
+    # Regression: query_plan previously kept describing the pre-downgrade
+    # analysis_type ('comparison') even after analysis_type and notes both
+    # correctly reflected the downgrade to 'distribution' -- an internally
+    # inconsistent response. Found via manual UI testing.
+    intent = _intent(
+        AnalysisType.COMPARISON,
+        entities=Entities(compare_a="Keytruda"),
+        query_plan="Search for Keytruda vs [missing], compare by phase.",
+    )
+    assert intent.analysis_type == AnalysisType.DISTRIBUTION
+    assert "downgraded from comparison" in intent.query_plan
 
 
 def test_comparison_missing_both_entities_downgrades_to_distribution():

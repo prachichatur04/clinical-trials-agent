@@ -6,7 +6,7 @@ from app.ctgov.record_extractor import extract_record
 from app.exceptions import NoResultsError
 from app.intent.llm_client import IntentLLMClient
 from app.intent.parser import parse_intent
-from app.schemas.intent import AnalysisType, Entities, Intent
+from app.schemas.intent import AnalysisType, Confidence, Entities, Intent
 from app.schemas.internal import DispatchResult, TrialRecord
 from app.schemas.request import QueryRequest
 from app.schemas.response import Meta, QueryResponse
@@ -29,7 +29,7 @@ async def run_pipeline(
     """
     generated_at = datetime.now(UTC)
     parsed = await parse_intent(request, llm_client=llm_client)
-    intent = parsed.intent
+    intent = _apply_request_overrides(parsed.intent, request)
 
     client = ctgov_client or CTGovClient()
     try:
@@ -84,6 +84,53 @@ async def run_pipeline(
         intent_source=parsed.source,
     )
     return QueryResponse(visualization=visualization, summary=summary, meta=meta)
+
+
+_OVERRIDABLE_ENTITY_FIELDS = (
+    "drug_name",
+    "condition",
+    "trial_phase",
+    "sponsor",
+    "country",
+    "status",
+    "start_year",
+    "end_year",
+    "compare_a",
+    "compare_b",
+    "compare_type",
+    "dimension",
+)
+
+
+def _apply_request_overrides(intent: Intent, request: QueryRequest) -> Intent:
+    """Structured fields the caller supplied directly are ground truth --
+    they override whatever Touch 1 (LLM or heuristic) extracted from the
+    query text, per the system prompt's own rule. This matters most for the
+    LLM path, which only ever sees the raw query string, never the
+    request's other fields.
+
+    If the caller supplies both compare_a and compare_b, that's stronger
+    evidence than any keyword match, so it forces analysis_type=comparison
+    outright -- this is also the only way to reach a comparison analysis
+    without an LLM, since the heuristic path has no NER to extract
+    compare_a/compare_b from free text on its own.
+    """
+    for field in _OVERRIDABLE_ENTITY_FIELDS:
+        value = getattr(request, field, None)
+        if value is not None:
+            setattr(intent.entities, field, value)
+
+    if intent.entities.compare_a and intent.entities.compare_b and intent.analysis_type != AnalysisType.COMPARISON:
+        override_note = (
+            f"analysis_type overridden to comparison: caller supplied both "
+            f"compare_a ({intent.entities.compare_a}) and compare_b ({intent.entities.compare_b})"
+        )
+        intent.analysis_type = AnalysisType.COMPARISON
+        intent.confidence = Confidence.HIGH
+        intent.notes = f"{intent.notes} ({override_note})".strip()
+        intent.query_plan = f"{intent.query_plan} ({override_note})".strip()
+
+    return intent
 
 
 def _entity_fetch_kwargs(entities: Entities) -> dict:

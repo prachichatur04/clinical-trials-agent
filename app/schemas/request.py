@@ -22,6 +22,16 @@ class QueryRequest(BaseModel):
     start_year: int | None = Field(default=None, ge=MIN_YEAR, le=MAX_YEAR)
     end_year: int | None = Field(default=None, ge=MIN_YEAR, le=MAX_YEAR)
 
+    # Comparison/dimension hints. Usually the LLM (or, for comparison,
+    # nothing -- see heuristics.py's documented limitation) extracts these
+    # from free text, but a caller who already knows what they want to
+    # compare can supply them directly; pipeline.py treats these as ground
+    # truth that overrides whatever Touch 1 guessed.
+    compare_a: str | None = None
+    compare_b: str | None = None
+    compare_type: str | None = None
+    dimension: str | None = None
+
     max_studies: int = Field(default=500, ge=1, le=MAX_STUDIES_HARD_CAP)
     include_citations: bool = True
     include_summary: bool = False

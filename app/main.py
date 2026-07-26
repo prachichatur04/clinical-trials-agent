@@ -17,6 +17,20 @@ from app.schemas.request import QueryRequest
 from app.schemas.response import QueryResponse
 from app.services.summary_generator import SummaryLLMClient
 
+# force=True: uvicorn's own CLI can configure the root logger's handlers
+# before this module is imported, which would otherwise make basicConfig()
+# silently no-op and drop every logger.info() call in this codebase --
+# including Touch 1/Touch 2's request/response logs -- with nothing
+# visible in the terminal to show for it.
+_LOG_DIR = Path(__file__).parent.parent / "logs"
+_LOG_DIR.mkdir(exist_ok=True)
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s %(levelname)s %(name)s: %(message)s",
+    handlers=[logging.StreamHandler(), logging.FileHandler(_LOG_DIR / "app.log")],
+    force=True,
+)
+
 logger = logging.getLogger(__name__)
 
 app = FastAPI(title="Clinical Trials Query-to-Visualization Agent")

@@ -1,4 +1,5 @@
 import logging
+import time
 
 from openai import AsyncOpenAI
 
@@ -41,6 +42,10 @@ class SummaryLLMClient:
         self._client = client or AsyncOpenAI(api_key=resolved_key)
 
     async def summarize(self, prompt: str) -> str:
+        logger.info("Touch 2 request: prompt_chars=%d", len(prompt))
+        logger.debug("Touch 2 full prompt: %s", prompt)
+
+        started_at = time.monotonic()
         response = await self._client.chat.completions.create(
             model=self._model,
             messages=[
@@ -48,7 +53,11 @@ class SummaryLLMClient:
                 {"role": "user", "content": prompt},
             ],
         )
-        return response.choices[0].message.content.strip()
+        duration_ms = (time.monotonic() - started_at) * 1000
+
+        summary = response.choices[0].message.content.strip()
+        logger.info("Touch 2 response (%.0fms): %s", duration_ms, summary)
+        return summary
 
 
 async def generate_summary(
